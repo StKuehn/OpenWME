@@ -65,7 +65,7 @@ int main()
 	{
 		for (int iz = -50; iz <= 50; iz++)
 		{
-			TParticle* Probe = scene.Add_Probe(TVector(ix * 2 * cm, 0, iz * cm), TVector(0, 0, 0));
+			TParticle* Probe = scene.Add_Probe(TVector(ix * 2 * cm, 0, iz * cm), speed * TVector(0, 0, 0));
 			PrimaryField.push_back(Probe);
 			scene.Add_WeberMaxwellForce(Transmitter, Probe);
 		}
@@ -85,7 +85,7 @@ int main()
 	{
 		for (int iz = -50; iz <= 50; iz++)
 		{
-			TParticle* Probe = scene.Add_Probe(TVector(ix * 2 * cm, 0, iz * cm), TVector(0, 0, 0));
+			TParticle* Probe = scene.Add_Probe(TVector(ix * 2 * cm, 0, iz * cm), speed * TVector(0, 0, 0));
 			SecondaryField.push_back(Probe);
 			scene.Add_WeberMaxwellForce(Reflector, Probe);
 		}

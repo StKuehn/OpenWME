@@ -112,6 +112,7 @@ void TDisplay::WriteToFile(void)
 
 	// to JPG: find . -name "*.png" -print0 | xargs -0 mogrify -format jpg -quality 50
 	// to MP4: ffmpeg -r 50 -i %05d_output.png test.mp4
+	// to WEBM: ffmpeg -r 50 -i %05d_output.png -c:v libvpx -crf 10 -b:v 5M -c:a libvorbis test.webm
 	static int png_nbr = 1;
 	char filename [100];
 
