@@ -25,8 +25,16 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 const TVector black = TVector(0.25, 0.25, 0.25);
 const TVector red = TVector(1, 0, 0);
 const TVector blue = TVector(0, 0, 1);
-// the time step of the simulation
+
+// these parameters represent a transmitter with an ERP of approximately 100W (see calibration)
+const sim_double maxtime = 10 * ns;
 const sim_double dt = 0.05 * ns;
+const sim_double freq = 3 * GHz;
+const sim_double amp = 100 * nm;
+const sim_double charge = 1e14 * e;
+const TVector direction = TVector(0, 0, 1);
+const sim_double reflpara = 10000;
+const sim_double mass = 1 * g;
 
 sim_double AmplModFunc(sim_double t)
 {
@@ -38,7 +46,6 @@ int main()
 {
 	TScene scene;
 	std::deque<TParticle*> Field;
-	// for the representation of one of the many double slits
 	std::deque<TParticle*> FirstDoubleSlit;
 	bool first = true;
 
@@ -47,29 +54,24 @@ int main()
 	{
 		for (int iz = -25; iz <= 25; iz++)
 		{
-			// create the transmitter (a copper bullet with a weight of 1g, in which 0.1 percent of the conduction
-			// electrons are oscillating)
 			TParticle* Transmitter = scene.Add_Particle();
-			// convert the point charge into a Hertzian dipole
-			Transmitter->ToHertzianDipole(1 * g, 9.47682e21 * e * 0.001, 1 * nm, 2.5 * GHz, 0, TVector(0, 0, 1), AmplModFunc);
-			// set position
+			Transmitter->ToHertzianDipole(mass, charge, amp, freq, 0, direction, AmplModFunc);
 			Transmitter->SetLinearTrajectory(TVector(ix * 2 * cm, 0, iz * 2 * cm), TVector(0, 0, 0));
-			// we want to know the force that would be generated on the transmitter by the reflected wave
 			Field.push_back(Transmitter);
 
 			// create a double slit exclusively for this transmitter (each transmitter gets its own double slit)
 			std::deque<TParticle*> DoubleSlit;
 			for (int iz = -60; iz <= 60; iz++)
 			{
-				if ((iz > -12) && (iz < -4)) continue;
-				if ((iz <  12) && (iz >  4)) continue;
+				sim_double z = iz * 1.5 * cm;
+
+				if ((z > -18 * cm) && (z < -6 * cm)) continue;
+				if ((z <  18 * cm) && (z >  6 * cm)) continue;
+
 				TParticle* Reflector = scene.Add_Particle();
-				// convert the point charge into a Hertzian dipole
-				Reflector->ToHertzianDipole(1 * g, 9.47682e21 * e, 0, 0, 0, TVector(0, 0, 1), NULL);
-				// make reflective
-				Reflector->MakeReflective(1e-1, 100);
-				// set position
-				Reflector->SetLinearTrajectory(TVector(0 * cm, 0, iz * 1.5 * cm), TVector(0, 0, 0));
+				Reflector->ToHertzianDipole(1, 1, 0, 0, 0, TVector(0, 0, 1), NULL);
+				Reflector->SetLinearTrajectory(TVector(0, 0,  z), TVector(0, 0, 0));
+				Reflector->MakeReflective(reflpara, 1000);
 				DoubleSlit.push_back(Reflector);
 				if (first) FirstDoubleSlit.push_back(Reflector);
 			}
@@ -96,14 +98,37 @@ int main()
 		{
 			Field[j]->force = Field[j]->force_cumulative / (i + 1);
 		}
-		display.PlotForceFieldXZ(Field, 0, 3e3, 8, 8, black);
+		display.PlotForceFieldXZ(Field, 0, 1e10, 8, 8, black);
 		for (std::size_t j = 0; j < FirstDoubleSlit.size(); j++)
 		{
 			display.DrawParticle(FirstDoubleSlit[j], 0, 5, blue);
 		}
 		display.DrawTime(i * dt / ns, "ns", 1, blue);
-		display.Draw(true);
+		if (i * dt >= maxtime)
+		{
+			display.Draw(true);
+			break;
+		}
+		else
+		{
+			display.Draw(false);
+		}
 	}
+
+	// output the result in a form that can be read by Mathematica
+	FILE* fp = fopen("result.txt", "w");
+	fprintf(fp, "Field = {");
+	for (std::size_t j = 0; j < Field.size(); j++)
+	{
+		if (j != 0) fprintf(fp, ",");
+		fprintf(fp, "{{%.5f,%.5f}, {%.5f,%.5f}}",
+				(double)Field[j]->GetPosition(0).x,
+				(double)Field[j]->GetPosition(0).z,
+				(double)(Field[j]->force.x / nN),
+				(double)(Field[j]->force.z / nN));
+	}
+	fprintf(fp, "};\n");
+	fclose(fp);
 
 	return 0;
 }

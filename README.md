@@ -2,6 +2,8 @@
 
 OpenWME is the first implementation of a general-purpose electromagnetic field solver (EM Solver), i.e., software for simulation of the physics of electromagnetic fields, based on Weber-Maxwell electrodynamics. By using the new Weber-Maxwell electrodynamics, OpenWME is not only orders of magnitude faster than any other EM solver that presently exists, but at the same time provides more accurate results with fewer numerical errors. The aforementioned advantages result from the fact that in Weber-Maxwell electrodynamics it is not necessary to solve Maxwell's equations numerically. Complicated electromagnetic fields, waves and their reflections can therefore usually be calculated in a few seconds, while conventional solvers need many hours or even days for similar tasks.
 
+![](examples/02_electromagnetic_waves/03_interference_at_a_double_slit/interference.gif)
+
 ------
 
 ## Weber-Maxwell electrodynamics
@@ -10,9 +12,12 @@ Key element of Weber-Maxwell electrodynamics is a force formula which describes 
 
 However, Weber-Maxwell electrodynamics is also excellently suited for the modeling and analysis of electromagnetic waves. In this respect it goes beyond the limits of Weber electrodynamics, which is included as a subset. The relation to Maxwell electrodynamics is that the Weber-Maxwell force is the general solution of Maxwell's equations for point charges, provided that one interprets Maxwell's equations in an adequate way. 
 
-The theoretical basics are described here: https://www.techrxiv.org/articles/preprint/24087840
+The theoretical foundations are described here:
 
-![](examples/02_electromagnetic_waves/03_interference_at_a_double_slit/interference.gif)
+* Steffen Kühn, "Inhomogeneous wave equation, Liénard-Wiechert potentials, and Hertzian dipoles in Weber electrodynamics", Electromagnetics, vol. 42, no. 8, pp. 571-593, 2022, [Journal](https://www.tandfonline.com/doi/abs/10.1080/02726343.2022.2161709) and [Free Preprint Version](https://www.techrxiv.org/articles/preprint/20222304)
+* Steffen Kühn, "Interpretation of the Solution of Maxwell’s Equations for a Moving Hertzian Dipole", Progress In Electromagnetics Research C, vol. 135, 121-130, 2023, [Journal](https://test.jpier.org/PIERC/pier.php?paper=23041404)
+* Steffen Kühn, "The Importance of Weber–Maxwell Electrodynamics in Electrical Engineering", IEEE Transactions on Antennas and Propagation, vol. 71, no. 8, pages 6698-6706, 2023, [Journal](https://ieeexplore.ieee.org/document/10134544) and [Free Preprint Version](https://www.techrxiv.org/articles/preprint/21776546)
+* Steffen Kühn, "Analytical Solution of Maxwell's Equations for Arbitrarily Moving Point Charges and its Application for Ultra-Fast, High-Quality Simulation of Electromagnetic Fields", Preprint, 2023, [Preprint](https://www.techrxiv.org/articles/preprint/24087840)
 
 OpenWME is currently in the alpha stage.
 
@@ -30,6 +35,8 @@ For most of the examples there is a video demonstrating the result of the simula
 - Reflection of electromagnetic waves: [Electromagnetic pulse reflected back and forth between two Hertzian dipoles](examples/02_electromagnetic_waves/02_reflection_two_resting_hertzian_dipols/reflection_two_resting_hertzian_dipols.webm?raw=true)
 - Interference: [Interference of an electromagnetic wave at a double slit](examples/02_electromagnetic_waves/03_interference_at_a_double_slit/interference_at_a_double_slit.webm?raw=true)
 - Fields of accelerated point charges: [Field of a point charge moving on a trajectory that corresponds to a lying eight](examples/02_electromagnetic_waves/04_point_charge_on_a_non_trival_path/point_charge_on_a_non_trival_path.webm?raw=true)
+- Reflection and polarization: [Hertzian dipole in front of a mirror](examples/02_electromagnetic_waves/05_hertzian_dipole_in_front_of_a_mirror/hertzian_dipole_in_front_of_a_mirror.webm?raw=true)
+- Reflection at a double slit: [Interference pattern depends on the relative position of the transmitter](examples/02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings/interference_depending_on_the_position_relative_to_the_openings.webm?raw=true)
 - Special relativity: [Einstein's light clock](examples/03_special_relativity/01_light_clock/light_clock.webm?raw=true)
 - Relativity of simultaneity: [Each intertial frame has its own fields](examples/03_special_relativity/02_reflection_moving_transmitter_resting_receiver/reflection_moving_transmitter_resting_receiver.webm?raw=true)
 - Quantum forces: [Field of the force of a Hertzian dipole on itself when it is in front of a double slit as a function of the location](examples/04_quantum_mechanics/01_quantum_forces_at_a_double_slit/quantum_forces_at_a_double_slit.png?raw=true)
@@ -148,6 +155,22 @@ This example is an extension of the previous example. It shows an arrangement of
 
 This example illustrates that also accelerated point charges and not only Hertzian dipoles can emit electromagnetic waves. Specifically, an electron is shown moving on a trajectory that resembles a lying number eight. This choice was arbitrary and is used to demonstrate that the shape of the trajectories in OpenWMB can be chosen freely and only have to be physically reasonable. In lines 40, 46 and 52 the trajectory can be defined. It is also interesting, for example, to define the field of a point charge which is suddenly strongly slowed down. Likewise interesting is to reduce the parameter ``freq``. One can see then how the wavelength increases and the wave finally disappears, because the wave trains become so long that they no longer fit into the drawing plane. The field then appears like a normal Coulomb field.
 
+### 02_electromagnetic_waves/05_hertzian_dipole_in_front_of_a_mirror
+
+[main.cpp](examples/02_electromagnetic_waves/05_hertzian_dipole_in_front_of_a_mirror/main.cpp)
+
+[video](examples/02_electromagnetic_waves/05_hertzian_dipole_in_front_of_a_mirror/hertzian_dipole_in_front_of_a_mirror.webm?raw=true)
+
+This example studies how a reflected wave depends on the direction of polarization of the transmitter. The reflective surface is located at the right-hand edge of the image.
+
+### 02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings
+
+[main.cpp](examples/02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings/main.cpp)
+
+[video](examples/02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings/interference_depending_on_the_position_relative_to_the_openings.webm?raw=true)
+
+If a Hertzian dipole is located in front of a double slit, the field strength of the reflected wave at the location of the Hertzian dipole depends significantly on its relative position to the openings. The resulting ponderomotive forces of the Hertzian dipole on itself are therefore position-dependent and cause that the Hertzian dipoles gradually drift to specific locations. These locations form an interference pattern.
+
 ### 03_special_relativity/01_light_clock
 
 [main.cpp](examples/03_special_relativity/01_light_clock/main.cpp)
@@ -180,7 +203,7 @@ This example is a more in-depth analysis of what has already been studied with t
 
 Also this example exceeds the usual field of application of electrical engineering considerably. It is an interesting by-product which arose during the development of Weber-Maxwell electrodynamics. Specifically, it was noticed during the work that electromagnetic transmitters exert forces on themselves when they are in the vicinity of matter. This reflects the emitted waves back to the transmitter. Depending on the shape and arrangement of the surrounding matter, these self-forces have an interesting spatial structure.
 
-In this example, a single Hertzian dipole is placed in front of a double slit aperture and then the reflection of the double slit is calculated (see also [video](examples/02_electromagnetic_waves/03_interference_at_a_double_slit/interference_at_a_double_slit.webm?raw=true)). The reflected forces are then time averaged. In addition, the position of the Hertzian dipole is systematically varied in raster form. The [image](examples/04_quantum_mechanics/01_quantum_forces_at_a_double_slit/quantum_forces_at_a_double_slit.png?raw=true) shows the resulting field of the electromagnetic force that a single Hertzian dipole exerts on itself depending on its position and location in front of the double slit.
+In this example, a single Hertzian dipole is placed in front of a double slit aperture and then the reflection of the double slit is calculated (see also this [video](examples/02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings/interference_depending_on_the_position_relative_to_the_openings.webm?raw=true)). The reflected forces are then time averaged. In addition, the position of the Hertzian dipole is systematically varied in raster form. The [image](examples/04_quantum_mechanics/01_quantum_forces_at_a_double_slit/quantum_forces_at_a_double_slit.png?raw=true) shows the resulting field of the electromagnetic force that a single Hertzian dipole exerts on itself depending on its position and location in front of the double slit.
 
 As can be noticed, the force is not at all zero and it becomes obvious that a transmitter avoids certain places and prefers others depending on its transmission frequency. If the reflector (blue) were infinitely extended and without openings, any position on the z-axis would be equivalent for the transmitter. However, it would prefer certain discrete distances from the reflecting surface depending on its transmission frequency.
 
