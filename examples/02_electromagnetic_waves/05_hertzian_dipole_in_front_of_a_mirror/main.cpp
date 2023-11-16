@@ -80,7 +80,7 @@ int main()
 			// convert the point charge into a Hertzian dipole
 			Reflector->ToHertzianDipole(1 * g, 9.47682e18 * e, 0, 0, 0, TVector(0, 0, 1), NULL);
 			// make reflective
-			Reflector->MakeReflective(reflpara, 1000);
+			Reflector->MakeReflective(reflpara, 0, 1000);
 			// set position
 			Reflector->SetLinearTrajectory(TVector(0, 0, iz * 1 * m), TVector(0, 0, 0));
 			Mirror.push_back(Reflector);

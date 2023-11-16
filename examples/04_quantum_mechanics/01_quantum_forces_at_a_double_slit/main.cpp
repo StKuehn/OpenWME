@@ -71,7 +71,7 @@ int main()
 				TParticle* Reflector = scene.Add_Particle();
 				Reflector->ToHertzianDipole(1, 1, 0, 0, 0, TVector(0, 0, 1), NULL);
 				Reflector->SetLinearTrajectory(TVector(0, 0,  z), TVector(0, 0, 0));
-				Reflector->MakeReflective(reflpara, 1000);
+				Reflector->MakeReflective(reflpara, 0, 1000);
 				DoubleSlit.push_back(Reflector);
 				if (first) FirstDoubleSlit.push_back(Reflector);
 			}

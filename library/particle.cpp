@@ -25,7 +25,8 @@ TParticle::TParticle(void)
 {
 	this->mass = 1 * kg;
 	this->charge = 1 * C;
-	this->reflection_parameter = 0;
+	this->reflection_amplitude = 0;
+	this->reflection_delay = 0;
 	this->probe = false;
 	this->v_dc = 0;
 	this->dvec = TVector(0, 0, 0);
@@ -120,9 +121,10 @@ void TParticle::SetFixedTrajectory(TVector r0, TTrajectoryFunc pf, TTrajectoryFu
 	this->trj = new TFixedTrajectory(r0, pf, vf, af);
 }
 
-void TParticle::MakeReflective(sim_double reflection_parameter, int max_history)
+void TParticle::MakeReflective(sim_double amplitude, sim_double delay, int max_history)
 {
-	this->reflection_parameter = reflection_parameter;
+	reflection_amplitude = amplitude;
+	reflection_delay = delay;
 	force_cur_history.max_history = max_history;
 }
 
@@ -179,11 +181,11 @@ TVector TParticle::GetAccelerationCurElem(sim_double t)
 			sim_double ac_amp = ampl;
 			if (ac_ampmod) ac_amp *= ac_ampmod(t);
 			a = -4 * ac_amp * dvec * freq * freq * pi * pi * sin(2 * pi * freq * t + phase);
-			if (reflection_parameter != 0)
+			if (reflection_amplitude != 0)
 			{
 				// this is a heuristic and should be further improved
-				TVector fch = force_cur_history.GetValue(t);
-				a = a + reflection_parameter * fch;
+				TVector fch = force_cur_history.GetValue(t - reflection_delay);
+				a = a + reflection_amplitude * fch;
 			}
 		}
 	}
@@ -197,7 +199,7 @@ TVector TParticle::GetAcceleration(sim_double t)
 
 void TParticle::TimeStep(sim_double dt)
 {
-	if (reflection_parameter != 0)
+	if (reflection_amplitude != 0)
 	{
 		force_cur_history.TimeStep(dt, force_cur);
 	}

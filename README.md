@@ -37,6 +37,7 @@ For most of the examples there is a video demonstrating the result of the simula
 - Fields of accelerated point charges: [Field of a point charge moving on a trajectory that corresponds to a lying eight](examples/02_electromagnetic_waves/04_point_charge_on_a_non_trival_path/point_charge_on_a_non_trival_path.webm?raw=true)
 - Reflection and polarization: [Hertzian dipole in front of a mirror](examples/02_electromagnetic_waves/05_hertzian_dipole_in_front_of_a_mirror/hertzian_dipole_in_front_of_a_mirror.webm?raw=true)
 - Reflection at a double slit: [Interference pattern depends on the relative position of the transmitter](examples/02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings/interference_depending_on_the_position_relative_to_the_openings.webm?raw=true)
+- Electromagnetic shielding: [Shielding by destructive interference](examples/02_electromagnetic_waves/07_shielding/shielding.webm?raw=true)
 - Special relativity: [Einstein's light clock](examples/03_special_relativity/01_light_clock/light_clock.webm?raw=true)
 - Relativity of simultaneity: [Each intertial frame has its own fields](examples/03_special_relativity/02_reflection_moving_transmitter_resting_receiver/reflection_moving_transmitter_resting_receiver.webm?raw=true)
 - Quantum forces: [Field of the force of a Hertzian dipole on itself when it is in front of a double slit as a function of the location](examples/04_quantum_mechanics/01_quantum_forces_at_a_double_slit/quantum_forces_at_a_double_slit.png?raw=true)
@@ -170,6 +171,14 @@ This example studies how a reflected wave depends on the direction of polarizati
 [video](examples/02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings/interference_depending_on_the_position_relative_to_the_openings.webm?raw=true)
 
 If a Hertzian dipole is located in front of a double slit, the field strength of the reflected wave at the location of the Hertzian dipole depends significantly on its relative position to the openings. The resulting ponderomotive forces of the Hertzian dipole on itself are therefore position-dependent and cause that the Hertzian dipoles gradually drift to specific locations. These locations form an interference pattern.
+
+### 02_electromagnetic_waves/07_shielding
+
+[main.cpp](examples/02_electromagnetic_waves/07_shielding/main.cpp)
+
+[video](examples/02_electromagnetic_waves/07_shielding/shielding.webm?raw=true)
+
+In this example, the reflection parameters are selected in such a way that an incident wave on the opposite side of an obstacle is almost completely canceled out. The effect is caused by destructive interference.
 
 ### 03_special_relativity/01_light_clock
 

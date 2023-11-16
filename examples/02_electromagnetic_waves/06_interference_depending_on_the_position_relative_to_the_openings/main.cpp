@@ -75,7 +75,7 @@ int main()
 		if ((pz < -10 * cm) && (pz > -20 * cm)) continue;
 		TParticle* Reflector = scene.Add_Particle();
 		Reflector->ToHertzianDipole(1, 1, 0, 0, 0, TVector(0, 0, 1), NULL);
-		Reflector->MakeReflective(reflpara, 1000);
+		Reflector->MakeReflective(reflpara, 0, 1000);
 		Reflector->SetLinearTrajectory(TVector(0, 0, iz * 3 * cm), TVector(0, 0, 0));
 		Doubleslit.push_back(Reflector);
 	}

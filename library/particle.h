@@ -85,7 +85,7 @@ public:
 	void SetFixedTrajectory(TVector r0, TTrajectoryFunc pf, TTrajectoryFunc vf, TTrajectoryFunc af);
 
 	// Makes the particle reflective. The usage is explained in the examples.
-	void MakeReflective(sim_double reflection_parameter, int max_history);
+	void MakeReflective(sim_double amplitude, sim_double delay, int max_history);
 
 	// Performs a time step.
 	void TimeStep(sim_double dt);
@@ -160,8 +160,9 @@ public:
 	TAmplModFunc ac_ampmod;
 
 private:
-	// the reflection parameter defines the strength of the particle's reflection of incident waves
-	sim_double reflection_parameter;
+	// reflection parameters. define the strength and phase of the particle's reflection of incident waves
+	sim_double reflection_amplitude;
+	sim_double reflection_delay;
 
 	// contains all information about the motion of the center of gravity
 	TTrajectory* trj;

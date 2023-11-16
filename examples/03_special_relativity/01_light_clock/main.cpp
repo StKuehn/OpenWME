@@ -56,7 +56,7 @@ int main()
 	// convert the point charge into a Hertzian dipole
 	Transmitter->ToHertzianDipole(mp, e, 1 * nm, 100 * GHz, 0, TVector(1, 0, 0), AmplModFunc);
 	// make reflective
-	Transmitter->MakeReflective(2e43, 1000);
+	Transmitter->MakeReflective(2e43, 0, 1000);
 	// set position
 	Transmitter->SetLinearTrajectory(TVector(-70 * cm, 0, 15 * cm), speed * TVector(1, 0, 0));
 
@@ -76,7 +76,7 @@ int main()
 	// convert the point charge into a Hertzian dipole
 	Reflector->ToHertzianDipole(mp, e, 0, 0, 0, TVector(1, 0, 0), NULL);
 	// make reflective
-	Reflector->MakeReflective(2e43, 1000);
+	Reflector->MakeReflective(2e43, 0, 1000);
 	// set position
 	Reflector->SetLinearTrajectory(TVector(-70 * cm, 0, -15 * cm), speed * TVector(1, 0, 0));
 

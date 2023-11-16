@@ -64,7 +64,7 @@ int main()
 			Reflector->ToHertzianDipole(1, 1, 0, 0, 0, TVector(0, 0, 1), NULL);
 			Reflector->SetLinearTrajectory(TVector(0, imy * 2 * cm, imz * 2 * cm), TVector(0, 0, 0));
 			// make reflective
-			Reflector->MakeReflective(reflpara, 1000);
+			Reflector->MakeReflective(reflpara, 0, 1000);
 			Mirror.push_back(Reflector);
 		}
 	}
