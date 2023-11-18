@@ -38,6 +38,9 @@ For most of the examples there is a video demonstrating the result of the simula
 - Reflection and polarization: [Hertzian dipole in front of a mirror](examples/02_electromagnetic_waves/05_hertzian_dipole_in_front_of_a_mirror/hertzian_dipole_in_front_of_a_mirror.webm?raw=true)
 - Reflection at a double slit: [Interference pattern depends on the relative position of the transmitter](examples/02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings/interference_depending_on_the_position_relative_to_the_openings.webm?raw=true)
 - Electromagnetic shielding: [Shielding by destructive interference](examples/02_electromagnetic_waves/07_shielding/shielding.webm?raw=true)
+- Diffraction: [Diffraction on a half-plane](examples/02_electromagnetic_waves/08_diffraction_half_plane/diffraction_half_plane.webm?raw=true)
+- Diffraction: [Diffraction at two shifted half planes](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/diffraction_at_shifted_half_planes.webm?raw=true)
+- Shielding and scattering: [Hollow sphere within a field of a transverse_wave](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/hollow_sphere_within_a_field_of_a_transverse_wave.webm)
 - Special relativity: [Einstein's light clock](examples/03_special_relativity/01_light_clock/light_clock.webm?raw=true)
 - Relativity of simultaneity: [Each intertial frame has its own fields](examples/03_special_relativity/02_reflection_moving_transmitter_resting_receiver/reflection_moving_transmitter_resting_receiver.webm?raw=true)
 - Quantum forces: [Field of the force of a Hertzian dipole on itself when it is in front of a double slit as a function of the location](examples/04_quantum_mechanics/01_quantum_forces_at_a_double_slit/quantum_forces_at_a_double_slit.png?raw=true)
@@ -179,6 +182,30 @@ If a Hertzian dipole is located in front of a double slit, the field strength of
 [video](examples/02_electromagnetic_waves/07_shielding/shielding.webm?raw=true)
 
 In this example, the reflection parameters are selected in such a way that an incident wave on the opposite side of an obstacle is almost completely canceled out. The effect is caused by destructive interference.
+
+### 02_electromagnetic_waves/08_diffraction_half_plane
+
+[main.cpp](examples/02_electromagnetic_waves/08_diffraction_half_plane/main.cpp)
+
+[video](examples/02_electromagnetic_waves/08_diffraction_half_plane/diffraction_half_plane.webm)
+
+A simple example of diffraction at a half plane.
+
+### 02_electromagnetic_waves/09_diffraction_at_shifted_half_planes
+
+[main.cpp](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/main.cpp)
+
+[video](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/diffraction_at_shifted_half_planes.webm)
+
+Diffraction can also occur multiple times. This example shows two half-planes arranged in such a way that the point source of the EM field is actually not visible in a direct line behind the two half-planes. A small part of the EM wave can nevertheless pass both half planes. Particularly strange is that the source behind the half-planes appears to be at a different location, which produces the illusion of curved EM field propagation. The effect was studied experimentally by F. Vedad (https://www.youtube.com/watch?v=ULfcla1Gl3A).
+
+### 02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave
+
+[main.cpp](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/main.cpp)
+
+[video](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/hollow_sphere_within_a_field_of_a_transverse_wave.webm)
+
+In this example, the Weber-Maxwell force is used to calculate how a closed metallic surface suppresses the intrusion of an electromagnetic field (for reasons of convenience, only a metallic ring is simulated in the simulation). In principle, however, there are no limits and any surface and shape can be analyzed.
 
 ### 03_special_relativity/01_light_clock
 

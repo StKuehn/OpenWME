@@ -100,7 +100,7 @@ int main()
 		display.DrawParticle(Transmitter, i * dt, 5, green);
 		for (std::size_t j = 0; j < Obstacle.size(); j++)
 		{
-			display.DrawParticle(Obstacle[j], j * dt, 5, blue);
+			display.DrawParticle(Obstacle[j], i * dt, 5, blue);
 		}
 		display.Draw(true);
 	}
