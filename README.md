@@ -187,7 +187,7 @@ In this example, the reflection parameters are selected in such a way that an in
 
 [main.cpp](examples/02_electromagnetic_waves/08_diffraction_half_plane/main.cpp)
 
-[video](examples/02_electromagnetic_waves/08_diffraction_half_plane/diffraction_half_plane.webm)
+[video](examples/02_electromagnetic_waves/08_diffraction_half_plane/diffraction_half_plane.webm?raw=true)
 
 A simple example of diffraction at a half plane.
 
@@ -195,7 +195,7 @@ A simple example of diffraction at a half plane.
 
 [main.cpp](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/main.cpp)
 
-[video](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/diffraction_at_shifted_half_planes.webm)
+[video](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/diffraction_at_shifted_half_planes.webm?raw=true)
 
 Diffraction can also occur multiple times. This example shows two half-planes arranged in such a way that the point source of the EM field is actually not visible in a direct line behind the two half-planes. A small part of the EM wave can nevertheless pass both half planes. Particularly strange is that the source behind the half-planes appears to be at a different location, which produces the illusion of curved EM field propagation. The effect was studied experimentally by F. Vedad (https://www.youtube.com/watch?v=ULfcla1Gl3A).
 
@@ -203,7 +203,7 @@ Diffraction can also occur multiple times. This example shows two half-planes ar
 
 [main.cpp](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/main.cpp)
 
-[video](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/hollow_sphere_within_a_field_of_a_transverse_wave.webm)
+[video](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/hollow_sphere_within_a_field_of_a_transverse_wave.webm?raw=true)
 
 In this example, the Weber-Maxwell force is used to calculate how a closed metallic surface suppresses the intrusion of an electromagnetic field (for reasons of convenience, only a metallic ring is simulated in the simulation). In principle, however, there are no limits and any surface and shape can be analyzed.
 
