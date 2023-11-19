@@ -67,7 +67,7 @@ int main()
 		TParticle* Reflector = scene.Add_Particle();
 		Reflector->ToHertzianDipole(1, 1, 0, 0, 0, TVector(0, 0, 1), NULL);
 		Reflector->MakeReflective(reflpara, refldelay, 1000);
-		Reflector->SetLinearTrajectory(TVector(-40*cm, 0, iz * 7.5 * cm), TVector(0, 0, 0));
+		Reflector->SetLinearTrajectory(TVector(-40 * cm, 0, iz * 7.5 * cm), TVector(0, 0, 0));
 		Obstacle.push_back(Reflector);
 	}
 

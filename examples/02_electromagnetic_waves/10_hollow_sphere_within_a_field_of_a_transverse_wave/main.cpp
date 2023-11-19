@@ -34,14 +34,14 @@ const sim_double charge = 1e14 * e;
 const sim_double mass = 1 * g;
 const sim_double maxtime = 20 * ns;
 const TVector dir = TVector(0, 0, 1);
-const sim_double radius = 40*cm;
+const sim_double radius = 40 * cm;
 const int shield_points = 100;
 const sim_double reflpara = -3.5e18;
 const sim_double refldelay = 0.35 * ns;
 
 sim_double AmplModFunc(sim_double t)
 {
-	if (t < -0.33*ns) return 0;
+	if (t < -0.33 * ns) return 0;
 	return 1;
 }
 
@@ -58,7 +58,7 @@ int main()
 	{
 		TParticle* HertzianDipole = scene.Add_Particle();
 		HertzianDipole->ToHertzianDipole(mass, charge, amp, freq, 0, dir, AmplModFunc);
-		HertzianDipole->SetLinearTrajectory(TVector(-1.1*m, 0, i * 10 * cm), TVector(0, 0, 0));
+		HertzianDipole->SetLinearTrajectory(TVector(-1.1 * m, 0, i * 10 * cm), TVector(0, 0, 0));
 		Transmitter.push_back(HertzianDipole);
 	}
 
@@ -67,9 +67,9 @@ int main()
 	for (int i = 0; i <= shield_points; i++)
 	{
 		TParticle* Reflector = scene.Add_Particle();
-		Reflector->ToHertzianDipole(mass, charge/shield_points, 0, 0, 0, TVector(0, 0, 1), NULL);
+		Reflector->ToHertzianDipole(mass, charge / shield_points, 0, 0, 0, TVector(0, 0, 1), NULL);
 		Reflector->MakeReflective(reflpara, refldelay, 1000);
-		Reflector->SetLinearTrajectory(TVector(radius*sin((2*pi*i)/shield_points), 0, radius*cos((2*pi*i)/shield_points)), TVector(0, 0, 0));
+		Reflector->SetLinearTrajectory(TVector(radius * sin((2 * pi * i) / shield_points), 0, radius * cos((2 * pi * i) / shield_points)), TVector(0, 0, 0));
 		Shield.push_back(Reflector);
 	}
 
@@ -87,7 +87,7 @@ int main()
 		for (std::size_t k = 0; k < Shield.size(); k++)
 		{
 			// avoid nearfield interaction between shield parts
-			if (nrm(Shield[j]->GetPosition(0) - Shield[k]->GetPosition(0)) < 1.9*radius) continue;
+			if (nrm(Shield[j]->GetPosition(0) - Shield[k]->GetPosition(0)) < 1.9 * radius) continue;
 			scene.Add_WeberMaxwellForce(Shield[j], Shield[k]);
 		}
 	}
