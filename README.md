@@ -1,6 +1,6 @@
 # OpenWME
 
-OpenWME is the first implementation of a general-purpose electromagnetic field solver (EM Solver), i.e., software for simulation of the physics of electromagnetic fields, based on Weber-Maxwell electrodynamics. By using the new Weber-Maxwell electrodynamics, OpenWME is not only orders of magnitude faster than any other EM solver that presently exists, but at the same time provides more accurate results with fewer numerical errors. The aforementioned advantages result from the fact that in Weber-Maxwell electrodynamics it is not necessary to solve Maxwell's equations numerically. Complicated electromagnetic fields, waves and their reflections can therefore usually be calculated in a few seconds, while conventional solvers need many hours or even days for similar tasks.
+OpenWME is the first implementation of a **general-purpose** electromagnetic field solver (EM Solver), i.e., software for simulation of the physics of electromagnetic fields, based on Weber-Maxwell electrodynamics. By using the new Weber-Maxwell electrodynamics, OpenWME is not only orders of magnitude faster than any other EM solver that presently exists, but at the same time provides more accurate results with fewer numerical errors. The aforementioned advantages result from the fact that in Weber-Maxwell electrodynamics it is not necessary to solve Maxwell's equations numerically. Complicated electromagnetic fields, waves and their reflections can therefore usually be calculated in a few seconds, while conventional solvers need many hours or even days for similar tasks.
 
 ![](examples/02_electromagnetic_waves/03_interference_at_a_double_slit/interference.gif)
 
@@ -23,13 +23,16 @@ OpenWME is currently in the alpha stage.
 
 ## Usage
 
-OpenWME consists of a C++ library and a number of example applications that include the library at source code level.
+OpenWME consists of a C++ library and a number of example applications that include the library at source code level. The examples are intentionally kept simple.
 
-For most of the examples there is a video demonstrating the result of the simulation:
+For most examples, there is also a video that demonstrates the result of the simulation.
 
+### Quasistatics and Weber electrodynamics:
 - Magnetism: [Force between two long straight wires](examples/01_quasistatics/01_magnetic_force_between_wires/magnetic_force_between_wires.webm?raw=true)
 - Electromagnetic induction: [Generation of a field near a moving conductor loop with direct current](examples/01_quasistatics/02_moving_current_loop_dc_current/moving_current_loop_dc_current.webm?raw=true)
 - Lorentz force: [Moving point charge in the field of a Helmholtz coil](examples/01_quasistatics/03_point_particle_in_a_helmholtz_coil/point_particle_in_a_helmholtz_coil.webm?raw=true)
+
+### Electromagnetic waves:
 - Electromagnetic induction: [Generation of a field in the vicinity of a stationary conductor loop with alternating current](examples/01_quasistatics/04_current_loop_with_ac_current/current_loop_with_ac_current.webm?raw=true)
 - Electromagnetic waves: [Field of a very fast moving electromagnetic transmitter](examples/02_electromagnetic_waves/01_moving_hertzian_dipole/moving_hertzian_dipole.webm?raw=true)
 - Reflection of electromagnetic waves: [Electromagnetic pulse reflected back and forth between two Hertzian dipoles](examples/02_electromagnetic_waves/02_reflection_two_resting_hertzian_dipols/reflection_two_resting_hertzian_dipols.webm?raw=true)
@@ -41,6 +44,10 @@ For most of the examples there is a video demonstrating the result of the simula
 - Diffraction: [Diffraction on a half-plane](examples/02_electromagnetic_waves/08_diffraction_half_plane/diffraction_half_plane.webm?raw=true)
 - Diffraction: [Diffraction at two shifted half planes](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/diffraction_at_shifted_half_planes.webm?raw=true)
 - Shielding and scattering: [Hollow sphere within a field of a transverse_wave](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/hollow_sphere_within_a_field_of_a_transverse_wave.webm?raw=true)
+- Waveguides: [Transmission of a wave in a pipe](examples/02_electromagnetic_waves/11_waveguide/waveguide.webm?raw=true)
+- Why do accelerating point charges radiate electromagnetic waves: [Field of a point charge that is suddenly accelerated](examples/02_electromagnetic_waves/12_suddenly_accelerated_point_charge/suddenly_accelerated_point_charge.webm?raw=true)
+
+### Research issues outside of classical electrodynamics:
 - Special relativity: [Einstein's light clock](examples/03_special_relativity/01_light_clock/light_clock.webm?raw=true)
 - Relativity of simultaneity: [Each intertial frame has its own fields](examples/03_special_relativity/02_reflection_moving_transmitter_resting_receiver/reflection_moving_transmitter_resting_receiver.webm?raw=true)
 - Quantum forces: [Field of the force of a Hertzian dipole on itself when it is in front of a double slit as a function of the location](examples/04_quantum_mechanics/01_quantum_forces_at_a_double_slit/quantum_forces_at_a_double_slit.png?raw=true)
@@ -206,6 +213,22 @@ Diffraction can also occur multiple times. This example shows two half-planes ar
 [video](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/hollow_sphere_within_a_field_of_a_transverse_wave.webm?raw=true)
 
 In this example, the Weber-Maxwell force is used to calculate how a closed metallic surface suppresses the intrusion of an electromagnetic field (for reasons of convenience, only a metallic ring is simulated in the simulation). In principle, however, there are no limits and any surface and shape can be analyzed.
+
+### 02_electromagnetic_waves/11_waveguide
+
+[main.cpp](examples/02_electromagnetic_waves/11_waveguide/main.cpp)
+
+[video](examples/02_electromagnetic_waves/11_waveguide/waveguide.webm?raw=true)
+
+The example shows that electromagnetic waves can be guided inside of a metal tube (https://en.wikipedia.org/wiki/Waveguide).
+
+### 02_electromagnetic_waves/12_suddenly_accelerated_point_charge/suddenly_accelerated_point_charge
+
+[main.cpp](examples/02_electromagnetic_waves/12_suddenly_accelerated_point_charge/main.cpp)
+
+[video](examples/02_electromagnetic_waves/12_suddenly_accelerated_point_charge/suddenly_accelerated_point_charge.webm?raw=true)
+
+A point charge at rest generates a Coulomb field and the field lines are always straight lines that start at the source. If the point charge is suddenly accelerated, this no longer applies and a wave train is created that propagates at the speed of light. In this example, an initially stationary charge is accelerated to 50% of the speed of light. It then continues to move uniformly, and we can see that the field now appears compressed in the direction of motion. The Weber-Maxwell force contains all these special cases in a single equation.
 
 ### 03_special_relativity/01_light_clock
 
