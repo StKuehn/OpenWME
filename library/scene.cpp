@@ -45,7 +45,7 @@ void TScene::TimeStep(sim_double dt)
 
 	for (std::size_t i = 0; i < Forces.size(); i++)
 	{
-		Forces[i]->Calculate(this->t);
+		Forces[i]->Calculate(this->t, dt);
 	}
 
 	for (std::size_t i = 0; i < Particles.size(); i++)

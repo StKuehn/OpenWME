@@ -37,66 +37,73 @@ TWeberMaxwellForce::TWeberMaxwellForce(TParticle* p1, TParticle* p2)
 	this->p2 = p2;
 }
 
-sim_double TWeberMaxwellForce::CalcTs(TParticle* src, TParticle* dst, sim_double t)
+sim_double TWeberMaxwellForce::CalcTs(TParticle* src, TParticle* dst, sim_double t, sim_double dt)
 {
-	// note that the fixed point iteration might not converge if relative velocities occur which
-	// exceed the speed of light
+	sim_double ts;
+	sim_double tsn = t;
 
-	sim_double ts = t - nrm(dst->GetPosition(t) - src->GetPosition(t)) / c;
-	sim_double tso;
-	sim_double td = 1e30;
-	sim_double tdo;
-
+	// use Newton's method
 	do
 	{
-		tdo = td;
-		tso = ts;
-		TVector rd = dst->GetPosition(ts);
-		TVector rs = src->GetPosition(ts);
-		ts = t - nrm(rd - rs) / c;
-		td = nrm(tso - ts);
+		ts = tsn;
+		TVector rv = dst->GetPosition(ts) - src->GetPosition(ts);
+		TVector vv = dst->GetVelocity(ts) - src->GetVelocity(ts);
+		if (nrm(vv) >= c)
+		{
+			return INFINITY;
+		}
+		sim_double r = nrm(rv);
+		sim_double RV = rv * vv;
+		tsn = (-r * r + c * r * t + RV * ts) / (c * r + RV);
 	}
-	while (tdo > td);
+	while (nrm(tsn - ts) > dt);
 
 	return ts;
 }
 
-void TWeberMaxwellForce::Calculate(sim_double t)
+void TWeberMaxwellForce::Calculate(sim_double t, sim_double dt)
 {
 	if ((p1 == NULL) || (p2 == NULL)) return;
 
-	TVector r1, r2, v1, a1, v2, a2, rc, vc, ac, f11, f12, f21, f22;
+	TVector f11, f12, f21, f22;
 
 	if ((p1->electro_dynamics) && (p2->electro_dynamics))
 	{
-		sim_double tc = CalcTs(p1, p2, t);
-		rc = p2->GetPosition(tc) - p1->GetPosition(tc);
-		vc = p2->GetVelocity(tc) - p1->GetVelocity(tc);
-		ac = p2->GetAcceleration(tc) - p1->GetAcceleration(tc);
+		TVector r1, r2, v1, a1, v2, a2, rc, vc, ac;
 
-		r1 = p1->GetPositionCurElem(tc);
-		v1 = p1->GetVelocityCurElem(tc);
-		a1 = p1->GetAccelerationCurElem(tc);
-		r2 = p2->GetPositionCurElem(tc);
-		v2 = p2->GetVelocityCurElem(tc);
-		a2 = p2->GetAccelerationCurElem(tc);
+		sim_double tc = CalcTs(p1, p2, t, dt);
+		if (tc != INFINITY)
+		{
+			rc = p2->GetPosition(tc) - p1->GetPosition(tc);
+			vc = p2->GetVelocity(tc) - p1->GetVelocity(tc);
+			ac = p2->GetAcceleration(tc) - p1->GetAcceleration(tc);
 
-		f11 = CalcWeberMaxwellForce(p1->charge, p2->charge, t, tc, rc + r2 - r1, vc + v2 - v1, ac + a2 - a1);
-		if (p1->current_element)
-		{
-			f21 = CalcWeberMaxwellForce(-p1->charge, p2->charge, t, tc, rc + r2 + r1, vc + v2 + v1, ac + a2 + a1);
-		}
-		if (p2->current_element)
-		{
-			f12 = CalcWeberMaxwellForce(p1->charge, -p2->charge, t, tc, rc - r2 - r1, vc - v2 - v1, ac - a2 - a1);
-		}
-		if (p1->current_element && p2->current_element)
-		{
-			f22 = CalcWeberMaxwellForce(-p1->charge, -p2->charge, t, tc, rc - r2 + r1, vc - v2 + v1, ac - a2 + a1);
+			r1 = p1->GetPositionCurElem(tc);
+			v1 = p1->GetVelocityCurElem(tc);
+			a1 = p1->GetAccelerationCurElem(tc);
+			r2 = p2->GetPositionCurElem(tc);
+			v2 = p2->GetVelocityCurElem(tc);
+			a2 = p2->GetAccelerationCurElem(tc);
+
+			f11 = CalcWeberMaxwellForce(p1->charge, p2->charge, t, tc, rc + r2 - r1, vc + v2 - v1, ac + a2 - a1);
+			if (p1->current_element)
+			{
+				f21 = CalcWeberMaxwellForce(-p1->charge, p2->charge, t, tc, rc + r2 + r1, vc + v2 + v1, ac + a2 + a1);
+			}
+			if (p2->current_element)
+			{
+				f12 = CalcWeberMaxwellForce(p1->charge, -p2->charge, t, tc, rc - r2 - r1, vc - v2 - v1, ac - a2 - a1);
+			}
+			if (p1->current_element && p2->current_element)
+			{
+				f22 = CalcWeberMaxwellForce(-p1->charge, -p2->charge, t, tc, rc - r2 + r1, vc - v2 + v1, ac - a2 + a1);
+			}
 		}
 	}
 	else
 	{
+		TVector v1, v2, rc, vc;
+
 		rc = p2->GetPosition(t) - p1->GetPosition(t);
 		vc = p2->GetVelocity(t) - p1->GetVelocity(t);
 
@@ -159,16 +166,6 @@ TVector TWeberMaxwellForce::CalcWeberForce(sim_double q1, sim_double q2, TVector
 	return CalcModernWeberForce(q1, q2, r, v);
 }
 
-TVector TWeberMaxwellForce::CalcRt(TVector rc, TVector vc, sim_double t, sim_double tc)
-{
-	return rc + vc * (t - tc);
-}
-
-sim_double TWeberMaxwellForce::CalcRh(TVector rt, TVector rc, TVector vc)
-{
-	return sqrt(rt * rt - ((rc ^ vc) * (rc ^ vc)) / (c * c));
-}
-
 TVector TWeberMaxwellForce::CalcWeberMaxwellForce(sim_double q1, sim_double q2, sim_double t, sim_double tc, TVector rc, TVector vc, TVector ac)
 {
 	if ((q1 == 0) || (q2 == 0))
@@ -176,11 +173,9 @@ TVector TWeberMaxwellForce::CalcWeberMaxwellForce(sim_double q1, sim_double q2, 
 		return TVector(0, 0, 0);
 	}
 
-	TVector rt = CalcRt(rc, vc, t, tc);
-	sim_double rh = CalcRh(rt, rc, vc);
-	sim_double h1 = c * c - vc * vc;
-	sim_double h2 = c * c * (t - tc) + rc * vc;
-	return (q1 * q2 * (ac * (c - (rt * vc) / rh) + rt * (h1 * (h1 - rc * ac)) / (h2 * rh))) / (4 * pi * eps0 * c * c * h2 * pow((1 - vc * vc / (c * c)), 3 / 2));
+	sim_double r = nrm(rc);
+	sim_double v = nrm(vc);
+	return (q1 * q2 * ((rc * c + r * vc) * (c * c - v * v - rc * ac) + ac * r * (r * c + rc * vc))) / (4 * pi * eps0 * pow(r * c + rc * vc, 3) * sqrt(1 - v * v / (c * c)));
 }
 
 THarmonicForce::THarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_constant, sim_double friction)
@@ -192,7 +187,7 @@ THarmonicForce::THarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_c
 	this->nsp = nrm(p1->GetPosition(0) - p2->GetPosition(0));
 }
 
-void THarmonicForce::Calculate(sim_double t)
+void THarmonicForce::Calculate(sim_double t, sim_double dt)
 {
 	TVector dist = p1->GetPosition(t) - p2->GetPosition(t);
 	TVector dvel = p1->GetVelocity(t) - p2->GetVelocity(t);

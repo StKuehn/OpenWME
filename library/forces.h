@@ -32,7 +32,7 @@ class TForce
 public:
 	TForce();
 	virtual ~TForce();
-	virtual void Calculate(sim_double t) = 0;
+	virtual void Calculate(sim_double t, sim_double dt) = 0;
 
 protected:
 	TParticle* p1;
@@ -52,16 +52,14 @@ class TWeberMaxwellForce: public TForce
 {
 public:
 	TWeberMaxwellForce(TParticle* p1, TParticle* p2);
-	virtual void Calculate(sim_double t);
+	virtual void Calculate(sim_double t, sim_double dt);
 
 private:
-	sim_double CalcTs(TParticle* src, TParticle* dst, sim_double t);
+	sim_double CalcTs(TParticle* src, TParticle* dst, sim_double t, sim_double dt);
 	TVector CalcWeberMaxwellForce(sim_double q1, sim_double q2, sim_double t, sim_double tc, TVector rc, TVector vc, TVector ac);
 	TVector CalcClassicalWeberForce(sim_double q1, sim_double q2, TVector r, TVector v);
 	TVector CalcModernWeberForce(sim_double q1, sim_double q2, TVector r, TVector v);
 	TVector CalcWeberForce(sim_double q1, sim_double q2, TVector r, TVector v);
-	TVector CalcRt(TVector rc, TVector vc, sim_double t, sim_double tc);
-	sim_double CalcRh(TVector rt, TVector rc, TVector vc);
 };
 
 /*
@@ -73,7 +71,7 @@ class THarmonicForce: public TForce
 {
 public:
 	THarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_constant, sim_double friction);
-	virtual void Calculate(sim_double t);
+	virtual void Calculate(sim_double t, sim_double dt);
 
 private:
 	sim_double spring_constant;
