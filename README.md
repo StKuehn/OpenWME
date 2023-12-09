@@ -12,14 +12,7 @@ Key element of Weber-Maxwell electrodynamics is a force formula which describes 
 
 However, Weber-Maxwell electrodynamics is also excellently suited for the modeling and analysis of electromagnetic waves. In this respect it goes beyond the limits of Weber electrodynamics, which is included as a subset. The relation to Maxwell electrodynamics is that the Weber-Maxwell force is the general solution of Maxwell's equations for point charges, provided that one interprets Maxwell's equations in an adequate way. 
 
-The theoretical foundations are described here:
-
-* Steffen Kühn, "Inhomogeneous wave equation, Liénard-Wiechert potentials, and Hertzian dipoles in Weber electrodynamics", Electromagnetics, vol. 42, no. 8, pp. 571-593, 2022, [Journal](https://www.tandfonline.com/doi/abs/10.1080/02726343.2022.2161709) and [Free Preprint Version](https://www.techrxiv.org/articles/preprint/20222304)
-* Steffen Kühn, "Interpretation of the Solution of Maxwell’s Equations for a Moving Hertzian Dipole", Progress In Electromagnetics Research C, vol. 135, 121-130, 2023, [Journal](https://test.jpier.org/PIERC/pier.php?paper=23041404)
-* Steffen Kühn, "The Importance of Weber–Maxwell Electrodynamics in Electrical Engineering", IEEE Transactions on Antennas and Propagation, vol. 71, no. 8, pages 6698-6706, 2023, [Journal](https://ieeexplore.ieee.org/document/10134544) and [Free Preprint Version](https://www.techrxiv.org/articles/preprint/21776546)
-* Steffen Kühn, "Analytical Solution of Maxwell's Equations for Arbitrarily Moving Point Charges and its Application for Ultra-Fast, High-Quality Simulation of Electromagnetic Fields", Preprint, 2023, [Preprint](https://www.techrxiv.org/articles/preprint/24087840)
-
-OpenWME is currently in the alpha stage.
+The theoretical foundations are described [here](https://www.quantino-theory.org). OpenWME is currently in the alpha stage.
 
 ## Usage
 
@@ -46,6 +39,7 @@ For most examples, there is also a video that demonstrates the result of the sim
 - Shielding and scattering: [Hollow sphere within a field of a transverse_wave](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/hollow_sphere_within_a_field_of_a_transverse_wave.webm?raw=true)
 - Waveguides: [Transmission of a wave in a pipe](examples/02_electromagnetic_waves/11_waveguide/waveguide.webm?raw=true)
 - Why do accelerating point charges radiate electromagnetic waves: [Field of a point charge that is suddenly accelerated](examples/02_electromagnetic_waves/12_suddenly_accelerated_point_charge/suddenly_accelerated_point_charge.webm?raw=true)
+- Interference: [Another example for interference at a double slit](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit.webm?raw=true)
 
 ### Research issues outside of classical electrodynamics:
 - Special relativity: [Einstein's light clock](examples/03_special_relativity/01_light_clock/light_clock.webm?raw=true)
@@ -230,6 +224,14 @@ The example shows that electromagnetic waves can be guided inside of a metal tub
 
 A point charge at rest generates a Coulomb field and the field lines are always straight lines that start at the source. If the point charge is suddenly accelerated, this no longer applies and a wave train is created that propagates at the speed of light. In this example, an initially stationary charge is accelerated to 50% of the speed of light. It then continues to move uniformly, and we can see that the field now appears compressed in the direction of motion. The Weber-Maxwell force contains all these special cases in a single equation.
 
+### 02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit
+
+This applet provides another example of interference at a double slit. In this case, however, an almost completely reflective surface was used. In addition, the wave is not divided into two components.
+
+[main.cpp](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/main.cpp)
+
+[video](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit.webm?raw=true)
+
 ### 03_special_relativity/01_light_clock
 
 [main.cpp](examples/03_special_relativity/01_light_clock/main.cpp)
@@ -266,7 +268,7 @@ In this example, a single Hertzian dipole is placed in front of a double slit ap
 
 As can be noticed, the force is not at all zero and it becomes obvious that a transmitter avoids certain places and prefers others depending on its transmission frequency. If the reflector (blue) were infinitely extended and without openings, any position on the z-axis would be equivalent for the transmitter. However, it would prefer certain discrete distances from the reflecting surface depending on its transmission frequency.
 
-By adding the openings, also on the z-axis a discretization becomes apparent. It is plausible to assume that such real classical forces might be the true cause of all quantum effects. For more on this topic, see https://www.techrxiv.org/articles/preprint/23055584
+By adding the openings, also on the z-axis a discretization becomes apparent. It is plausible to assume that such real classical forces might be the true cause of all quantum effects. For more on this topic, see https://doi.org/10.36227/techrxiv.23055584.v2
 
 
 
