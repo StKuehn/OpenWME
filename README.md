@@ -198,7 +198,7 @@ A simple example of diffraction at a half plane.
 
 [video](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/diffraction_at_shifted_half_planes.webm?raw=true)
 
-Diffraction can also occur multiple times. This example shows two half-planes arranged in such a way that the point source of the EM field is actually not visible in a direct line behind the two half-planes. A small part of the EM wave can nevertheless pass both half planes. Particularly strange is that the source behind the half-planes appears to be at a different location, which produces the illusion of curved EM field propagation. The effect was studied experimentally by F. Vedad (https://www.youtube.com/watch?v=ULfcla1Gl3A).
+Diffraction can also occur multiple times. This example shows two half-planes arranged in such a way that the point source of the EM field is actually not visible in a direct line behind the two half-planes. A small part of the EM wave can nevertheless pass both half planes. Particularly strange is that the source behind the half-planes appears to be at a different location, which produces the illusion of curved EM field propagation. The effect is known as the shadow blister effect (https://www.ej-physics.org/index.php/ejphysics/article/view/304).
 
 ### 02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave
 
@@ -216,7 +216,7 @@ In this example, the Weber-Maxwell force is used to calculate how a closed metal
 
 The example shows that electromagnetic waves can be guided inside of a metal tube (https://en.wikipedia.org/wiki/Waveguide).
 
-### 02_electromagnetic_waves/12_suddenly_accelerated_point_charge/suddenly_accelerated_point_charge
+### 02_electromagnetic_waves/12_suddenly_accelerated_point_charge
 
 [main.cpp](examples/02_electromagnetic_waves/12_suddenly_accelerated_point_charge/main.cpp)
 
@@ -224,13 +224,21 @@ The example shows that electromagnetic waves can be guided inside of a metal tub
 
 A point charge at rest generates a Coulomb field and the field lines are always straight lines that start at the source. If the point charge is suddenly accelerated, this no longer applies and a wave train is created that propagates at the speed of light. In this example, an initially stationary charge is accelerated to 50% of the speed of light. It then continues to move uniformly, and we can see that the field now appears compressed in the direction of motion. The Weber-Maxwell force contains all these special cases in a single equation.
 
-### 02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit
+### 02_electromagnetic_waves/13_interference_at_a_double_slit
 
 This applet provides another example of interference at a double slit. In this case, however, an almost completely reflective surface was used. In addition, the wave is not divided into two components.
 
 [main.cpp](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/main.cpp)
 
 [video](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit.webm?raw=true)
+
+### 02_electromagnetic_waves/14_pizzellas_experiment
+
+This simulation studies the question of why the electric field of a point charge accelerated to almost the speed of light is instantaneously present in the plane directly at the exit of a metallic pipe (R. de Sangro, G. Finocchiaro, P. Patteri, M. Piccolo & G. Pizzella, "Measuring propagation speed of Coulomb fields", Eur. Phys. J. C 75, 2015). At first glance, this seems to violate the rule that the field cannot propagate faster than the speed of light. The reason for this phenomenon is likely caused by the fact that at high speeds the metallic shielding is largely ineffective. A Coulomb field of a point charge moving at almost the speed of light is strongly compressed in the direction of motion, but is intensified in transverse direction. At high speeds, the shield is no longer able to compensate the field quickly enough. As a result, the shield becomes more and more transparent.
+
+[main.cpp](examples/02_electromagnetic_waves/14_pizzellas_experiment/main.cpp)
+
+[video](examples/02_electromagnetic_waves/14_pizzellas_experiment/pizzella_experiment.webm?raw=true)
 
 ### 03_special_relativity/01_light_clock
 
