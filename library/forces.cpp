@@ -41,6 +41,9 @@ sim_double TWeberMaxwellForce::CalcTs(TParticle* src, TParticle* dst, sim_double
 {
 	sim_double ts;
 	sim_double tsn = t;
+	sim_double delta;
+	int it = 0;
+	const int maxit = 300;
 
 	// use Newton's method
 	do
@@ -55,8 +58,15 @@ sim_double TWeberMaxwellForce::CalcTs(TParticle* src, TParticle* dst, sim_double
 		sim_double r = nrm(rv);
 		sim_double RV = rv * vv;
 		tsn = (-r * r + c * r * t + RV * ts) / (c * r + RV);
+		delta = nrm(tsn - ts);
+		it++;
 	}
-	while (nrm(tsn - ts) > dt);
+	while ((delta > dt) && (it < maxit));
+
+	if (it >= maxit)
+	{
+		return INFINITY;
+	}
 
 	return ts;
 }
