@@ -36,7 +36,7 @@ const sim_double c1 = vmax / (t1 - t0);
 const sim_double x1 = c0 * t1 + (c1 * t1 * t1) / 2 - (t0 * t0 *vmax) / (2 * (t0 - t1)) + x0;
 
 // trajectory
-TVector trajectory0(sim_double t)
+TVector trajectory0(sim_double t, TVector r0)
 {
 	if (t <= t0) return TVector(x0, 0, 0);
 	if (t >= t1) return TVector(x1 + vmax * (t - t1), 0, 0);
@@ -44,7 +44,7 @@ TVector trajectory0(sim_double t)
 }
 
 // first derivative of the trajectory with respect to time
-TVector trajectory1(sim_double t)
+TVector trajectory1(sim_double t, TVector r0)
 {
 	if (t <= t0) return TVector(0, 0, 0);
 	if (t >= t1) return TVector(vmax, 0, 0);
@@ -52,7 +52,7 @@ TVector trajectory1(sim_double t)
 }
 
 // second derivative of the trajectory with respect to time
-TVector trajectory2(sim_double t)
+TVector trajectory2(sim_double t, TVector r0)
 {
 	if (t <= t0) return TVector(0, 0, 0);
 	if (t >= t1) return TVector(0, 0, 0);

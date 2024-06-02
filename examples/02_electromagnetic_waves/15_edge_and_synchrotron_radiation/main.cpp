@@ -36,7 +36,7 @@ const sim_double x0 = -4.5 * m;
 const sim_double rad = 2 * m;
 
 // trajectory
-TVector trajectory0(sim_double t)
+TVector trajectory0(sim_double t, TVector r0)
 {
 	if (t > -(x0 / vm))
 	{
@@ -56,7 +56,7 @@ TVector trajectory0(sim_double t)
 }
 
 // first derivative of the trajectory with respect to time
-TVector trajectory1(sim_double t)
+TVector trajectory1(sim_double t, TVector r0)
 {
 	if (t > -(x0 / vm))
 	{
@@ -76,7 +76,7 @@ TVector trajectory1(sim_double t)
 }
 
 // second derivative of the trajectory with respect to time
-TVector trajectory2(sim_double t)
+TVector trajectory2(sim_double t, TVector r0)
 {
 	if (t > -(x0 / vm))
 	{

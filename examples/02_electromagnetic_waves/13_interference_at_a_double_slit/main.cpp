@@ -64,8 +64,8 @@ int main()
 	for (int iz = -80; iz <= 80; iz++)
 	{
 		sim_double zv = iz * 2 * cm;
-		if ((zv >= -30*cm) && (zv <= -15*cm)) continue;
-		if ((zv >= 15*cm) && (zv <= 30*cm)) continue;
+		if ((zv >= -30 * cm) && (zv <= -15 * cm)) continue;
+		if ((zv >= 15 * cm) && (zv <= 30 * cm)) continue;
 		TParticle* Reflector = scene.Add_Particle();
 		Reflector->ToHertzianDipole(1, 1, 0, 0, 0, TVector(0, 0, 1), NULL);
 		Reflector->MakeReflective(reflpara, refldelay, 1000);

@@ -106,7 +106,7 @@ private:
 };
 
 // TFixedTrajectory is intended to describe arbitrary but fixed trajectories
-typedef TVector(*TTrajectoryFunc)(sim_double t);
+typedef TVector(*TTrajectoryFunc)(sim_double t, TVector r0);
 
 class TFixedTrajectory: public TTrajectory
 {

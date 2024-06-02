@@ -39,8 +39,7 @@ TWeberMaxwellForce::TWeberMaxwellForce(TParticle* p1, TParticle* p2)
 
 sim_double TWeberMaxwellForce::CalcTs(TParticle* src, TParticle* dst, sim_double t, sim_double dt)
 {
-	sim_double ts;
-	sim_double tsn = t;
+	sim_double ts = t;
 	sim_double delta;
 	int it = 0;
 	const int maxit = 300;
@@ -48,7 +47,6 @@ sim_double TWeberMaxwellForce::CalcTs(TParticle* src, TParticle* dst, sim_double
 	// use Newton's method
 	do
 	{
-		ts = tsn;
 		TVector rv = dst->GetPosition(ts) - src->GetPosition(ts);
 		TVector vv = dst->GetVelocity(ts) - src->GetVelocity(ts);
 		if (nrm(vv) >= c)
@@ -57,8 +55,9 @@ sim_double TWeberMaxwellForce::CalcTs(TParticle* src, TParticle* dst, sim_double
 		}
 		sim_double r = nrm(rv);
 		sim_double RV = rv * vv;
-		tsn = (-r * r + c * r * t + RV * ts) / (c * r + RV);
+		sim_double tsn = (-r * r + c * r * t + RV * ts) / (c * r + RV);
 		delta = nrm(tsn - ts);
+		ts = tsn;
 		it++;
 	}
 	while ((delta > dt) && (it < maxit));

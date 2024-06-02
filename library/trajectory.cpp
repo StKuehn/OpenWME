@@ -203,17 +203,17 @@ TFixedTrajectory::~TFixedTrajectory()
 
 TVector TFixedTrajectory::GetPosition(sim_double t)
 {
-	return r0 + pf(t);
+	return pf(t, r0);
 }
 
 TVector TFixedTrajectory::GetVelocity(sim_double t)
 {
-	return vf(t);
+	return vf(t, r0);
 }
 
 TVector TFixedTrajectory::GetAcceleration(sim_double t)
 {
-	return af(t);
+	return af(t, r0);
 }
 
 void TFixedTrajectory::TimeStep(sim_double dt, TVector a)

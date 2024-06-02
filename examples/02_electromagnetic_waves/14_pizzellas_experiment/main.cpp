@@ -43,19 +43,19 @@ const sim_double reflpara = 2e4;
 const sim_double refldelay = 0;
 
 // trajectory
-TVector trajectory0(sim_double t)
+TVector trajectory0(sim_double t, TVector r0)
 {
 	return TVector((t * vmax) / 2.0 + x0 + (dur * vmax * log(cosh(4.0 - (8.0 * t) / dur))) / 16.0, 0, 0);
 }
 
 // first derivative of the trajectory with respect to time
-TVector trajectory1(sim_double t)
+TVector trajectory1(sim_double t, TVector r0)
 {
 	return TVector(vmax / 2.0 - (vmax * tanh(4 - (8 * t) / dur)) / 2., 0, 0);
 }
 
 // second derivative of the trajectory with respect to time
-TVector trajectory2(sim_double t)
+TVector trajectory2(sim_double t, TVector r0)
 {
 	return TVector((4 * vmax * pow(1.0 / cosh(4 - (8 * t) / dur), 2)) / dur, 0, 0);
 }

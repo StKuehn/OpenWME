@@ -35,19 +35,19 @@ const sim_double amp = 0.2 * m;
 const TVector zero = TVector(0, 0, 0);
 
 // trajectory
-TVector trajectory0(sim_double t)
+TVector trajectory0(sim_double t, TVector r0)
 {
 	return TVector(amp * sin(2 * pi * freq * t), 0, amp * sin(4 * pi * freq * t));
 }
 
 // first derivative of the trajectory with respect to time
-TVector trajectory1(sim_double t)
+TVector trajectory1(sim_double t, TVector r0)
 {
 	return TVector(2 * amp * freq * pi * cos(2 * freq * pi * t), 0, 4 * amp * freq * pi * cos(4 * freq * pi * t));
 }
 
 // second derivative of the trajectory with respect to time
-TVector trajectory2(sim_double t)
+TVector trajectory2(sim_double t, TVector r0)
 {
 	return TVector(-4 * amp * freq * freq * pi * pi * sin(2 * freq * pi * t), 0, -16 * amp * freq * freq * pi * pi * sin(4 * freq * pi * t));
 }
