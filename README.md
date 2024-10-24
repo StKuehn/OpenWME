@@ -240,6 +240,22 @@ This simulation studies the question of why the electric field of a point charge
 
 [video](examples/02_electromagnetic_waves/14_pizzellas_experiment/pizzella_experiment.webm?raw=true)
 
+### 02_electromagnetic_waves/15_edge_and_synchrotron_radiation
+
+Field of a particle that is forced to change its direction of motion.
+
+[main.cpp](examples/02_electromagnetic_waves/15_edge_and_synchrotron_radiation/main.cpp)
+
+[video](examples/02_electromagnetic_waves/15_edge_and_synchrotron_radiation/edge_and_synchrotron_radiation.webm?raw=true)
+
+### 02_electromagnetic_waves/16_cyclotron
+
+Field of a particle that is accelerated in a cyclotron.
+
+[main.cpp](examples/02_electromagnetic_waves/16_cyclotron/main.cpp)
+
+[video](examples/02_electromagnetic_waves/16_cyclotron/cyclotron.webm?raw=true)
+
 ### 03_special_relativity/01_light_clock
 
 [main.cpp](examples/03_special_relativity/01_light_clock/main.cpp)
