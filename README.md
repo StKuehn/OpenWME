@@ -12,6 +12,7 @@ The solver was developed to support the peer review of scientific articles and t
 - Electrodynamics for Nonrelativistic Point Charges in Electrical Engineering: A framework based on Maxwell’s equations and Ampère’s original force law, *IEEE Antennas and Propagation Magazine*, 2025, DOI: [10.1109/MAP.2025.3555924](https://doi.org/10.1109/MAP.2025.3555924)
 - Weber–Maxwell electrodynamics: classical electromagnetism in its most compact and pure form, *Electromagnetics*, 2024, DOI: [10.1080/02726343.2024.2375328](https://doi.org/10.1080/02726343.2024.2375328)
 - The Importance of Weber–Maxwell Electrodynamics in Electrical Engineering, *IEEE Transactions on Antennas and Propagation*, 2023, DOI: [10.1109/TAP.2023.3278078](https://doi.org/10.1109/TAP.2023.3278078)
+- Inhomogeneous wave equation, Liénard-Wiechert potentials, and Hertzian dipoles in Weber electrodynamics, *Electromagnetics*, 2023, DOI: [10.1080/02726343.2022.2161709](https://doi.org/10.1080/02726343.2022.2161709)
 
 Preprints can be found on [Techrxiv](https://www.techrxiv.org/).
 
