@@ -1,18 +1,19 @@
 # OpenWME
 
-OpenWME is the first implementation of a **general-purpose** electromagnetic field solver (EM Solver), i.e., software for simulation of the physics of electromagnetic fields, based on Weber-Maxwell electrodynamics. By using the new Weber-Maxwell electrodynamics, OpenWME is not only orders of magnitude faster than any other EM solver that presently exists, but at the same time provides more accurate results with fewer numerical errors. The aforementioned advantages result from the fact that in Weber-Maxwell electrodynamics it is not necessary to solve Maxwell's equations numerically. Complicated electromagnetic fields, waves and their reflections can therefore usually be calculated in a few seconds, while conventional solvers need many hours or even days for similar tasks.
+OpenWME is a **general-purpose** electromagnetic field solver (EM Solver), i.e., software for simulation of the physics of electromagnetic fields, based on Weber-Maxwell electrodynamics. OpenWME is typically orders of magnitude faster than numerical EM solvers while providing more accurate results with fewer numerical errors. The advantages result from the fact that in Weber-Maxwell electrodynamics it is not necessary to solve Maxwell's equations numerically.
 
-![](examples/02_electromagnetic_waves/03_interference_at_a_double_slit/interference.gif)
+![](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit.gif)
 
-------
+Key element of Weber-Maxwell electrodynamics is a algebraic force formula which describes the electromagnetic force between two point charges and which satisfies Newton's third law, i.e. *actio* = *reactio*. Unlike the well-known Coulomb force, the Weber-Maxwell force can be also applied to moving and arbitrarily accelerated point charges. Thus, compared to the Coulomb force, it contains all electromagnetic effects, e.g. magnetism or induction. Weber-Maxwell electrodynamics is also excellently suited for the modeling and analysis of electromagnetic waves. In this respect it goes beyond the limits of Weber electrodynamics, which is included as a subset. The relation to Maxwell electrodynamics is that the Weber-Maxwell force is the general solution of Maxwell's equations for point charges, provided that one interprets Maxwell's equations in an adequate way. Another important feature for engineering is that the electrodynamics fulfills the Galilean principle of reality and at the same time guarantees that electromagnetic waves propagate at the speed of light for every receiver and observer. The Lorentz transformation is not required.
 
-## Weber-Maxwell electrodynamics
+The solver was developed to support the peer review of scientific articles and to demonstrate that Weber-Maxwell electrodynamics provides correct predictions.
 
-Key element of Weber-Maxwell electrodynamics is a force formula which describes the electromagnetic force between two point charges and which satisfies Newton's third law, i.e. *actio* = *reactio*. Unlike the well-known Coulomb force, however, the Weber-Maxwell force is universal and can be also applied to moving and arbitrarily accelerated point charges. Thus, compared to the Coulomb force, it contains all electromagnetic effects, e.g. magnetism or induction. 
+#### The theoretical foundations are described in several articles:
+- Electrodynamics for Nonrelativistic Point Charges in Electrical Engineering: A framework based on Maxwell’s equations and Ampère’s original force law, *IEEE Antennas and Propagation Magazine*, 2025, DOI: [10.1109/MAP.2025.3555924](https://doi.org/10.1109/MAP.2025.3555924)
+- Weber–Maxwell electrodynamics: classical electromagnetism in its most compact and pure form, *Electromagnetics*, 2024, DOI: [10.1080/02726343.2024.2375328](https://doi.org/10.1080/02726343.2024.2375328)
+- The Importance of Weber–Maxwell Electrodynamics in Electrical Engineering, *IEEE Transactions on Antennas and Propagation*, 2023, DOI: [10.1109/TAP.2023.3278078](https://doi.org/10.1109/TAP.2023.3278078)
 
-However, Weber-Maxwell electrodynamics is also excellently suited for the modeling and analysis of electromagnetic waves. In this respect it goes beyond the limits of Weber electrodynamics, which is included as a subset. The relation to Maxwell electrodynamics is that the Weber-Maxwell force is the general solution of Maxwell's equations for point charges, provided that one interprets Maxwell's equations in an adequate way. 
-
-The theoretical foundations are described [here](https://www.quantino-theory.org). OpenWME is currently in the alpha stage.
+Preprints can be found on [Techrxiv](https://www.techrxiv.org/).
 
 ## Usage
 
