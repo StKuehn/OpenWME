@@ -293,7 +293,8 @@ In this example, a single Hertzian dipole is placed in front of a double slit ap
 
 As can be noticed, the force is not at all zero and it becomes obvious that a transmitter avoids certain places and prefers others depending on its transmission frequency. If the reflector (blue) were infinitely extended and without openings, any position on the z-axis would be equivalent for the transmitter. However, it would prefer certain discrete distances from the reflecting surface depending on its transmission frequency.
 
-By adding the openings, also on the z-axis a discretization becomes apparent. It is plausible to assume that such real classical forces might be the true cause of all quantum effects. For more on this topic, see https://doi.org/10.36227/techrxiv.23055584.v2
+By adding the openings, also on the z-axis a discretization becomes apparent. It is plausible to assume that such real classical forces might be the true cause of all quantum effects. For more on this topic, see:
+[On the wave-particle duality of a Hertzian dipole, Annales de la Fondation Louis de Broglie, Volume 49, 2025](https://fondationlouisdebroglie.org/AFLB-491/1007Kuehn.pdf)
 
 
 
