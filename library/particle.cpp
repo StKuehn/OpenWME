@@ -199,6 +199,7 @@ TVector TParticle::GetAcceleration(sim_double t)
 
 void TParticle::TimeStep(sim_double dt)
 {
+	if (probe) return;
 	if (reflection_amplitude != 0)
 	{
 		force_cur_history.TimeStep(dt, force_cur);

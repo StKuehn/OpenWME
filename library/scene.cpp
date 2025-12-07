@@ -36,7 +36,7 @@ TScene::~TScene()
 	}
 }
 
-void TScene::TimeStep(sim_double dt)
+void TScene::TimeStep(sim_double dt, bool with_probes)
 {
 	for (std::size_t i = 0; i < Particles.size(); i++)
 	{
@@ -45,7 +45,7 @@ void TScene::TimeStep(sim_double dt)
 
 	for (std::size_t i = 0; i < Forces.size(); i++)
 	{
-		Forces[i]->Calculate(this->t, dt);
+		Forces[i]->Calculate(this->t, dt, with_probes);
 	}
 
 	for (std::size_t i = 0; i < Particles.size(); i++)

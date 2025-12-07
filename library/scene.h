@@ -56,7 +56,7 @@ public:
 	THarmonicForce* Add_HarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_constant, sim_double friction);
 
 	// Calcuates all forces and performs a time step.
-	void TimeStep(sim_double dt);
+	void TimeStep(sim_double dt, bool with_probes = true);
 
 	// Returns the current time of the simulation.
 	sim_double GetCurrentTime(void);

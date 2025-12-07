@@ -32,7 +32,7 @@ class TForce
 public:
 	TForce();
 	virtual ~TForce();
-	virtual void Calculate(sim_double t, sim_double dt) = 0;
+	virtual void Calculate(sim_double t, sim_double dt, bool with_probes) = 0;
 
 protected:
 	TParticle* p1;
@@ -52,7 +52,7 @@ class TWeberMaxwellForce: public TForce
 {
 public:
 	TWeberMaxwellForce(TParticle* p1, TParticle* p2);
-	virtual void Calculate(sim_double t, sim_double dt);
+	virtual void Calculate(sim_double t, sim_double dt, bool with_probes);
 
 private:
 	sim_double CalcTs(TParticle* src, TParticle* dst, sim_double t, sim_double dt);
@@ -71,7 +71,7 @@ class THarmonicForce: public TForce
 {
 public:
 	THarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_constant, sim_double friction);
-	virtual void Calculate(sim_double t, sim_double dt);
+	virtual void Calculate(sim_double t, sim_double dt, bool with_probes);
 
 private:
 	sim_double spring_constant;

@@ -70,9 +70,15 @@ sim_double TWeberMaxwellForce::CalcTs(TParticle* src, TParticle* dst, sim_double
 	return ts;
 }
 
-void TWeberMaxwellForce::Calculate(sim_double t, sim_double dt)
+void TWeberMaxwellForce::Calculate(sim_double t, sim_double dt, bool with_probes)
 {
 	if ((p1 == NULL) || (p2 == NULL)) return;
+
+	if (!with_probes)
+	{
+		if (p1->probe) return;
+		if (p2->probe) return;
+	}
 
 	TVector f11, f12, f21, f22;
 
@@ -196,8 +202,16 @@ THarmonicForce::THarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_c
 	this->nsp = nrm(p1->GetPosition(0) - p2->GetPosition(0));
 }
 
-void THarmonicForce::Calculate(sim_double t, sim_double dt)
+void THarmonicForce::Calculate(sim_double t, sim_double dt, bool with_probes)
 {
+	if ((p1 == NULL) || (p2 == NULL)) return;
+
+	if (!with_probes)
+	{
+		if (p1->probe) return;
+		if (p2->probe) return;
+	}
+
 	TVector dist = p1->GetPosition(t) - p2->GetPosition(t);
 	TVector dvel = p1->GetVelocity(t) - p2->GetVelocity(t);
 
