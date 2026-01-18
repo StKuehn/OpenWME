@@ -76,6 +76,7 @@ void TDisplay::Clear(void)
 		cr_buffer = NULL;
 	}
 
+	//cs_buffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->SizeX, this->SizeY);
 	cs_buffer = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, this->SizeX, this->SizeY);
 	cr_buffer = cairo_create(cs_buffer);
 	cairo_set_source_rgb(cr_buffer, 1, 1, 1);
@@ -162,8 +163,13 @@ void TDisplay::DrawTime(sim_double t, const char* unit, sim_double size, TVector
 void TDisplay::DrawParticle(TParticle* p, sim_double t, sim_double size, TVector color)
 {
 	TVector r = p->GetPosition(t);
+	DrawDisc(r, size, color);
+}
+
+void TDisplay::DrawDisc(TVector pos, sim_double size, TVector color)
+{
 	cairo_set_source_rgb(cr_buffer, color.x, color.y, color.z);
-	cairo_arc(cr_buffer, x_to_win(r.x), z_to_win(r.z), size, 0, 2 * M_PI);
+	cairo_arc(cr_buffer, x_to_win(pos.x), z_to_win(pos.z), size, 0, 2 * M_PI);
 	cairo_fill(cr_buffer);
 }
 

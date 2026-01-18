@@ -23,7 +23,8 @@ FLAGS = $(INCS) -Wall -fverbose-asm
 ifdef DEBUG
 	FLAGS += -g2
 else
-	FLAGS += -O3
+	FLAGS += -O3 -fopenmp
+	LDFLAGS += -fopenmp
 endif
 
 # create all new
@@ -32,7 +33,7 @@ all: clean target
 target: $(BIN)
 
 $(BIN): $(OBJPATTERNS)
-	$(CPP) $(OBJS) -o $(BIN) $(LIBS)
+	$(CPP) $(OBJS) -o $(BIN) $(LDFLAGS) $(LIBS)
 
 $(OBJPATTERNS): $(CFILES)
 	@mkdir -p $(OBJDIR)

@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License along with
 this program. If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include <omp.h>
 #include "scene.h"
 
 TScene::TScene(void)
@@ -38,16 +39,24 @@ TScene::~TScene()
 
 void TScene::TimeStep(sim_double dt, bool with_probes)
 {
+	#pragma omp parallel for
 	for (std::size_t i = 0; i < Particles.size(); i++)
 	{
 		Particles[i]->ClearForces();
 	}
 
+	#pragma omp parallel for
 	for (std::size_t i = 0; i < Forces.size(); i++)
 	{
 		Forces[i]->Calculate(this->t, dt, with_probes);
 	}
 
+	for (std::size_t i = 0; i < Forces.size(); i++)
+	{
+		Forces[i]->Update();
+	}
+
+	#pragma omp parallel for
 	for (std::size_t i = 0; i < Particles.size(); i++)
 	{
 		Particles[i]->TimeStep(dt);
@@ -68,6 +77,13 @@ THarmonicForce* TScene::Add_HarmonicForce(TParticle* p1, TParticle* p2, sim_doub
 	THarmonicForce* HarmonicForce = new THarmonicForce(p1, p2, spring_constant, friction);
 	Forces.push_back(HarmonicForce);
 	return HarmonicForce;
+}
+
+TPonderomotiveForce* TScene::Add_PonderomotiveForce(TParticle* p, sim_double freq, sim_double freq_res, TVector a, bool spherical_wave)
+{
+	TPonderomotiveForce* PonderomotiveForce = new TPonderomotiveForce(p, freq, freq_res, a, spherical_wave);
+	Forces.push_back(PonderomotiveForce);
+	return PonderomotiveForce;
 }
 
 TParticle* TScene::Add_Particle(void)

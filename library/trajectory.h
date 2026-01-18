@@ -38,7 +38,7 @@ public:
 	virtual TVector GetVelocity(sim_double t) = 0;
 	virtual TVector GetAcceleration(sim_double t) = 0;
 
-	virtual void TimeStep(sim_double dt, TVector a) = 0;
+	virtual void TimeStep(sim_double dt, const TVector& a) = 0;
 };
 
 class TTimeBuffer
@@ -46,7 +46,7 @@ class TTimeBuffer
 public:
 	TTimeBuffer(void);
 	TVector GetValue(sim_double t);
-	void TimeStep(sim_double dt, TVector v);
+	void TimeStep(sim_double dt, const TVector& v);
 	int max_history;
 
 private:
@@ -66,17 +66,19 @@ public:
 	//               divided by the speed of light and the time step.
 	// cons_kin_energy - if True, the kinetic energy of the particle is kept constant.
 	//                   the parameter should usually be False.
-	TFreeTrajectory(TVector r0, TVector v0, int max_history, bool cons_kin_energy);
+	// cons_location - if True, the location of the particle is kept constant.
+	TFreeTrajectory(TVector r0, TVector v0, int max_history, bool cons_kin_energy, bool cons_location);
 	virtual ~TFreeTrajectory();
 
 	virtual TVector GetPosition(sim_double t);
 	virtual TVector GetVelocity(sim_double t);
 	virtual TVector GetAcceleration(sim_double t);
 
-	virtual void TimeStep(sim_double dt, TVector a);
+	virtual void TimeStep(sim_double dt, const TVector& a);
 
 private:
 	bool cons_kin_energy;
+	bool cons_location;
 	std::deque<sim_double> t;
 	std::deque<TVector> r;
 	std::deque<TVector> v;
@@ -98,7 +100,7 @@ public:
 	virtual TVector GetVelocity(sim_double t);
 	virtual TVector GetAcceleration(sim_double t);
 
-	virtual void TimeStep(sim_double dt, TVector a);
+	virtual void TimeStep(sim_double dt, const TVector& a);
 
 private:
 	TVector r;
@@ -122,7 +124,7 @@ public:
 	virtual TVector GetVelocity(sim_double t);
 	virtual TVector GetAcceleration(sim_double t);
 
-	virtual void TimeStep(sim_double dt, TVector a);
+	virtual void TimeStep(sim_double dt, const TVector& a);
 
 private:
 	TVector r0;

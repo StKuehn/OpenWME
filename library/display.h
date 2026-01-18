@@ -44,6 +44,7 @@ public:
 	void PlotForceFieldXZ(const std::deque<TParticle*>& field, sim_double t, sim_double amp, sim_double mscf, sim_double maxh, TVector color);
 	void DrawTime(sim_double t, const char* unit, sim_double size, TVector color);
 	void DrawParticle(TParticle* p, sim_double t, sim_double size, TVector color);
+	void DrawDisc(TVector pos, sim_double size, TVector color);
 	void Draw(bool write_to_file);
 
 private:

@@ -19,9 +19,6 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #ifndef OPENWME_TYPES_H
 #define OPENWME_TYPES_H
 
-// Typical for electrodynamics is that because of the large numerical value of the
-// speed of light, one has to calculate with widely varying orders of magnitude.
-// Even 64 bit floating point numbers are not always sufficient.
-typedef long double sim_double;
+typedef double sim_double;
 
 #endif

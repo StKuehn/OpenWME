@@ -98,9 +98,10 @@ TTrajectory::~TTrajectory()
 {
 }
 
-TFreeTrajectory::TFreeTrajectory(TVector r0, TVector v0, int max_history, bool cons_kin_energy)
+TFreeTrajectory::TFreeTrajectory(TVector r0, TVector v0, int max_history, bool cons_kin_energy, bool cons_location)
 {
 	this->cons_kin_energy = cons_kin_energy;
+	this->cons_location = cons_location;
 	this->t.push_back(0);
 	this->r.push_back(r0);
 	this->v.push_back(v0);
@@ -127,7 +128,7 @@ TVector TFreeTrajectory::GetAcceleration(sim_double t)
 	return Interpolate(t, this->t, &this->a, NULL);
 }
 
-void TFreeTrajectory::TimeStep(sim_double dt, TVector a)
+void TFreeTrajectory::TimeStep(sim_double dt, const TVector& a)
 {
 	// see: https://www.compadre.org/PICUP/resources/Numerical-Integration/
 	// velocity Verlet algorithm
@@ -138,8 +139,15 @@ void TFreeTrajectory::TimeStep(sim_double dt, TVector a)
 
 	sim_double tnp = tn + dt;
 	TVector anp = a;
-	TVector rnp = rn + vn * dt + 0.5 * an * dt * dt;
-	TVector vnp = vn + 0.5 * (anp + an) * dt;
+	TVector rnp = rn;
+	TVector vnp = vn;
+
+	if (!cons_location)
+	{
+		rnp = rn + vn * dt + 0.5 * an * dt * dt;
+	}
+
+	vnp = vn + 0.5 * (anp + an) * dt;
 
 	if (cons_kin_energy)
 	{
@@ -185,7 +193,7 @@ TVector TLinearTrajectory::GetAcceleration(sim_double t)
 	return TVector(0, 0, 0);
 }
 
-void TLinearTrajectory::TimeStep(sim_double dt, TVector a)
+void TLinearTrajectory::TimeStep(sim_double dt, const TVector& a)
 {
 }
 
@@ -216,7 +224,7 @@ TVector TFixedTrajectory::GetAcceleration(sim_double t)
 	return af(t, r0);
 }
 
-void TFixedTrajectory::TimeStep(sim_double dt, TVector a)
+void TFixedTrajectory::TimeStep(sim_double dt, const TVector& a)
 {
 }
 
@@ -231,7 +239,7 @@ TVector TTimeBuffer::GetValue(sim_double t)
 	return Interpolate(t, this->t, &v, NULL);
 }
 
-void TTimeBuffer::TimeStep(sim_double dt, TVector v)
+void TTimeBuffer::TimeStep(sim_double dt, const TVector& v)
 {
 	sim_double tn = this->t.back() + dt;
 	this->t.push_back(tn);

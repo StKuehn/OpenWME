@@ -56,6 +56,10 @@ public:
 	void ToHertzianDipole(sim_double mass, sim_double charge, sim_double ampl, sim_double freq,
 						  sim_double phase, TVector dvec, TAmplModFunc ampmod);
 
+	// Similar to ToHertzianDipole, but the charge quantities do not have to be inversely equal
+	void ToChargedDipole(sim_double mass, sim_double charge1, sim_double charge2, sim_double ampl,
+						 sim_double freq, sim_double phase, TVector dvec, TAmplModFunc ampmod);
+
 	// Transforms the particle into a DC current element. A DC current element can be thought of as a
 	// short segment of a wire in which a direct current flows. In reality, many DC current elements must
 	// always be connected to a closed conductor loop.
@@ -75,7 +79,7 @@ public:
 							sim_double freq, sim_double phase, TAmplModFunc ampmod);
 
 	// Defines that the particle can move freely under the influence of forces (see trajectory.h).
-	void SetFreeTrajectory(TVector r0, TVector v0, int max_history, bool cons_kin_energy);
+	void SetFreeTrajectory(TVector r0, TVector v0, int max_history, bool cons_kin_energy, bool cons_location = false);
 
 	// Defines that the particle moves only along a given line (see trajectory.h).
 	void SetLinearTrajectory(TVector r0, TVector v0);
@@ -121,7 +125,8 @@ public:
 	// inertial mass in kg
 	sim_double mass;
 
-	// electric charge (in C)
+	// electric charge (in C). for the Hertzian dipole, this parameter corresponds to the amount of
+	// positive charge.
 	sim_double charge;
 
 	// if this flag is set, the point charge becomes a current element, i.e. it consists of two point

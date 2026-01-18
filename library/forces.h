@@ -33,6 +33,7 @@ public:
 	TForce();
 	virtual ~TForce();
 	virtual void Calculate(sim_double t, sim_double dt, bool with_probes) = 0;
+	virtual void Update(void) = 0;
 
 protected:
 	TParticle* p1;
@@ -53,13 +54,16 @@ class TWeberMaxwellForce: public TForce
 public:
 	TWeberMaxwellForce(TParticle* p1, TParticle* p2);
 	virtual void Calculate(sim_double t, sim_double dt, bool with_probes);
+	virtual void Update(void);
 
 private:
 	sim_double CalcTs(TParticle* src, TParticle* dst, sim_double t, sim_double dt);
-	TVector CalcWeberMaxwellForce(sim_double q1, sim_double q2, sim_double t, sim_double tc, TVector rc, TVector vc, TVector ac);
-	TVector CalcClassicalWeberForce(sim_double q1, sim_double q2, TVector r, TVector v);
-	TVector CalcModernWeberForce(sim_double q1, sim_double q2, TVector r, TVector v);
-	TVector CalcWeberForce(sim_double q1, sim_double q2, TVector r, TVector v);
+	TVector CalcWeberMaxwellForce(sim_double q1, sim_double q2, sim_double t, sim_double tc, const TVector& rc, const TVector& vc, const TVector& ac);
+	TVector CalcClassicalWeberForce(sim_double q1, sim_double q2, const TVector& r, const TVector& v);
+	TVector CalcModernWeberForce(sim_double q1, sim_double q2, const TVector& r, const TVector& v);
+	TVector CalcWeberForce(sim_double q1, sim_double q2, const TVector& r, const TVector& v);
+
+	TVector f11, f12, f21, f22;
 };
 
 /*
@@ -72,11 +76,43 @@ class THarmonicForce: public TForce
 public:
 	THarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_constant, sim_double friction);
 	virtual void Calculate(sim_double t, sim_double dt, bool with_probes);
+	virtual void Update(void);
 
 private:
 	sim_double spring_constant;
 	sim_double friction;
 	sim_double nsp;
+	TVector f;
+};
+
+class TPonderomotiveForce: public TForce
+{
+public:
+	TPonderomotiveForce(TParticle* p, sim_double freq, sim_double freq_res, TVector a, bool spherical_wave);
+	void AddReflector(const TVector& pos, sim_double refl_para);
+	virtual void Calculate(sim_double t, sim_double dt, bool with_probes);
+	virtual void Update(void);
+
+private:
+	TVector AkThi(int k, int i);
+	TVector GradhkThi(int k, int i);
+	void Update_h(int k);
+	void UpdateR(sim_double t);
+
+	bool spherical_wave;
+	std::deque<TVector> positions;
+	std::deque<TVector> r;
+	std::deque<sim_double> rn;
+	std::deque<sim_double> rn2;
+	std::deque<sim_double> rn4;
+	std::deque<sim_double> rp;
+	std::deque<TVector> h;
+	TVector f;
+	sim_double w;
+	sim_double wr;
+	TVector av;
+	sim_double q0;
+	TVector r0;
 };
 
 #endif

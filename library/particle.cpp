@@ -69,6 +69,20 @@ void TParticle::ToHertzianDipole(sim_double mass, sim_double charge, sim_double 
 	this->dvec = dvec / nrm(dvec);
 }
 
+void TParticle::ToChargedDipole(sim_double mass, sim_double charge1, sim_double charge2, sim_double ampl, sim_double freq, sim_double phase, TVector dvec, TAmplModFunc ampmod)
+{
+	this->mass = mass;
+	this->charge = charge1;
+	this->ampl = ampl;
+	this->freq = freq;
+	this->phase = phase;
+	this->ac_ampmod = ampmod;
+	this->electro_dynamics = true;
+	this->current_element = true;
+	this->ac_current_element = false;
+	this->dvec = dvec / nrm(dvec);
+}
+
 void TParticle::ToDCCurrentElement(sim_double mass, sim_double current, sim_double len, TVector dvec, TAmplModFunc ampmod)
 {
 	// too small values causes numerical problems
@@ -103,10 +117,10 @@ void TParticle::ClearForces(void)
 	force_cur = TVector(0, 0, 0);
 }
 
-void TParticle::SetFreeTrajectory(TVector r0, TVector v0, int max_history, bool cons_kin_energy)
+void TParticle::SetFreeTrajectory(TVector r0, TVector v0, int max_history, bool cons_kin_energy, bool cons_location)
 {
 	delete this->trj;
-	this->trj = new TFreeTrajectory(r0, v0, this->force_cur_history.max_history, cons_kin_energy);
+	this->trj = new TFreeTrajectory(r0, v0, max_history, cons_kin_energy, cons_location);
 }
 
 void TParticle::SetLinearTrajectory(TVector r0, TVector v0)

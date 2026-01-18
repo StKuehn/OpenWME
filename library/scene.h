@@ -55,6 +55,8 @@ public:
 	// because a spring force, like the electromagnetic force, obeys Newton's third law.
 	THarmonicForce* Add_HarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_constant, sim_double friction);
 
+	TPonderomotiveForce* Add_PonderomotiveForce(TParticle* p, sim_double freq, sim_double freq_res, TVector a, bool spherical_wave);
+
 	// Calcuates all forces and performs a time step.
 	void TimeStep(sim_double dt, bool with_probes = true);
 

@@ -80,8 +80,6 @@ void TWeberMaxwellForce::Calculate(sim_double t, sim_double dt, bool with_probes
 		if (p2->probe) return;
 	}
 
-	TVector f11, f12, f21, f22;
-
 	if ((p1->electro_dynamics) && (p2->electro_dynamics))
 	{
 		TVector r1, r2, v1, a1, v2, a2, rc, vc, ac;
@@ -139,7 +137,10 @@ void TWeberMaxwellForce::Calculate(sim_double t, sim_double dt, bool with_probes
 			f22 = CalcWeberForce(-p1->charge, -p2->charge, rc, vc - v2 + v1);
 		}
 	}
+}
 
+void TWeberMaxwellForce::Update(void)
+{
 	if (!p2->probe)
 	{
 		p1->force = p1->force - (f11 + f12 + f21 + f22);
@@ -153,7 +154,7 @@ void TWeberMaxwellForce::Calculate(sim_double t, sim_double dt, bool with_probes
 	}
 }
 
-TVector TWeberMaxwellForce::CalcClassicalWeberForce(sim_double q1, sim_double q2, TVector r, TVector v)
+TVector TWeberMaxwellForce::CalcClassicalWeberForce(sim_double q1, sim_double q2, const TVector& r, const TVector& v)
 {
 	if ((q1 == 0) || (q2 == 0))
 	{
@@ -164,7 +165,7 @@ TVector TWeberMaxwellForce::CalcClassicalWeberForce(sim_double q1, sim_double q2
 	return (q1 * q2) / (4 * pi * eps0) * (1 + (v * v) / (c * c) - 3 / 2 * pow((r * v) / (c * nrm(r)), 2)) * r / pow(nrm(r), 3);
 }
 
-TVector TWeberMaxwellForce::CalcModernWeberForce(sim_double q1, sim_double q2, TVector r, TVector v)
+TVector TWeberMaxwellForce::CalcModernWeberForce(sim_double q1, sim_double q2, const TVector& r, const TVector& v)
 {
 	if ((q1 == 0) || (q2 == 0))
 	{
@@ -176,12 +177,12 @@ TVector TWeberMaxwellForce::CalcModernWeberForce(sim_double q1, sim_double q2, T
 	return (q1 * q2 * r * sqrt(1 - v * v / (c * c))) / (4 * pi * eps0 * pow(r * r - pow(nrm(r ^ v) / c, 2), 1.5));
 }
 
-TVector TWeberMaxwellForce::CalcWeberForce(sim_double q1, sim_double q2, TVector r, TVector v)
+TVector TWeberMaxwellForce::CalcWeberForce(sim_double q1, sim_double q2, const TVector& r, const TVector& v)
 {
 	return CalcModernWeberForce(q1, q2, r, v);
 }
 
-TVector TWeberMaxwellForce::CalcWeberMaxwellForce(sim_double q1, sim_double q2, sim_double t, sim_double tc, TVector rc, TVector vc, TVector ac)
+TVector TWeberMaxwellForce::CalcWeberMaxwellForce(sim_double q1, sim_double q2, sim_double t, sim_double tc, const TVector& rc, const TVector& vc, const TVector& ac)
 {
 	if ((q1 == 0) || (q2 == 0))
 	{
@@ -190,7 +191,10 @@ TVector TWeberMaxwellForce::CalcWeberMaxwellForce(sim_double q1, sim_double q2, 
 
 	sim_double r = nrm(rc);
 	sim_double v = nrm(vc);
-	return (q1 * q2 * ((rc * c + r * vc) * (c * c - v * v - rc * ac) + ac * r * (r * c + rc * vc))) / (4 * pi * eps0 * pow(r * c + rc * vc, 3) * sqrt(1 - v * v / (c * c)));
+	sim_double h1 = r * c + rc * vc;
+	sim_double h2 = h1 * h1 * h1;
+	sim_double h3 = sqrt(1 - v * v / (c * c));
+	return (q1 * q2 * ((rc * c + r * vc) * (c * c - v * v - rc * ac) + ac * r * h1)) / (4 * pi * eps0 * h2 * h3);
 }
 
 THarmonicForce::THarmonicForce(TParticle* p1, TParticle* p2, sim_double spring_constant, sim_double friction)
@@ -217,14 +221,17 @@ void THarmonicForce::Calculate(sim_double t, sim_double dt, bool with_probes)
 
 	sim_double nrmd = nrm(dist);
 	if (nrmd < 0.01 * nm) nrmd = 0.01 * nm;
-	TVector f = spring_constant * (dist - nsp * dist / nrmd);
+	f = spring_constant * (dist - nsp * dist / nrmd);
 
 	sim_double nrmv = nrm(dvel);
 	if (nrmv > nm / s)
 	{
 		f = f + friction * nrm(f) * dvel / nrmv;
 	}
+}
 
+void THarmonicForce::Update(void)
+{
 	if (!p2->probe)
 	{
 		p1->force = p1->force - f;
@@ -238,5 +245,95 @@ void THarmonicForce::Calculate(sim_double t, sim_double dt, bool with_probes)
 	}
 }
 
+TPonderomotiveForce::TPonderomotiveForce(TParticle* p, sim_double freq, sim_double freq_res, TVector a, bool spherical_wave)
+{
+	p1 = p;
+	p2 = NULL;
+	w = 2 * pi * freq;
+	wr = 2 * pi * freq_res;
+	av = a;
+	q0 = p->charge;
+	this->spherical_wave = spherical_wave;
+}
 
+void TPonderomotiveForce::AddReflector(const TVector& pos, sim_double refl_para)
+{
+	positions.push_back(pos);
+	r.push_back(pos);
+	rn.push_back(0);
+	rn2.push_back(0);
+	rn4.push_back(0);
+	h.push_back(TVector(0, 0, 0));
+	rp.push_back(refl_para);
+}
+
+void TPonderomotiveForce::UpdateR(sim_double t)
+{
+	r0 = p1->GetPosition(t);
+	#pragma omp parallel for
+	for (std::size_t  k = 0; k < r.size(); k++)
+	{
+		r[k] = positions[k] - r0;
+		rn[k] = nrm(r[k]);
+		rn2[k] = rn[k] * rn[k];
+		rn4[k] = rn2[k] * rn2[k];
+		Update_h(k);
+	}
+}
+
+void TPonderomotiveForce::Update_h(int k)
+{
+	if (spherical_wave)
+	{
+		h[k] = -av / rn2[k];
+	}
+	else
+	{
+		h[k] = (r[k] * av) * r[k] / rn4[k] - av / rn2[k];
+	}
+}
+
+TVector TPonderomotiveForce::AkThi(int k, int i)
+{
+	return 2 * (w / c) * (r[k] / rn[k]) * (h[k] * h[i]);
+}
+
+TVector TPonderomotiveForce::GradhkThi(int k, int i)
+{
+	if (spherical_wave)
+	{
+		return 2 * (av * av) * (r[k] / (rn4[k] * rn2[i]));
+	}
+	else
+	{
+		TVector res = TVector(0, 0, 0);
+		res = res + (r[i] * av) * (((r[i] ^ (r[k] ^ av))) / (rn4[k] * rn4[i]));
+		res = res + (r[i] * av) * (((av ^ (r[k] ^ r[i]))) / (rn4[k] * rn4[i]));
+		res = res - 2 * ((av ^ (r[k] ^ av))) / (rn4[k] * rn2[i]);
+		res = res + 4 * (r[k] / rn2[k]) * (h[k] * h[i]);
+		return res;
+	}
+}
+
+void TPonderomotiveForce::Calculate(sim_double t, sim_double dt, bool with_probes)
+{
+	TVector gradg2 = TVector(0, 0, 0);
+
+	UpdateR(t);
+	for (std::size_t  k = 0; k < r.size(); k++)
+	{
+		#pragma omp parallel for
+		for (std::size_t  i = 0; i < r.size(); i++)
+		{
+			sim_double arg = 2 * w / c * (rn[k] - rn[i]);
+			gradg2 = gradg2 + 2 * (rp[k] * rp[i]) * (AkThi(k, i) * sin(arg) + GradhkThi(k, i) * cos(arg));
+		}
+	}
+	f = -(pow(mu0, 4) * pow(q0, 4)) / (128 * pow(pi, 4) * m * (w * w - wr * wr)) * gradg2;
+}
+
+void TPonderomotiveForce::Update(void)
+{
+	p1->force = p1->force + f;
+}
 
