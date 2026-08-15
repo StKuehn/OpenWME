@@ -1,20 +1,45 @@
-# OpenWME
+# OpenWME: General-Purpose Electromagnetic Field Solver
 
-OpenWME is a **general-purpose** electromagnetic field solver (EM solver), i.e., software for simulating the physics of electromagnetic fields, based on Weber-Maxwell electrodynamics. OpenWME is typically orders of magnitude faster than numerical EM solvers while providing more accurate results with fewer numerical errors. The advantages result from the fact that in Weber-Maxwell electrodynamics it is not necessary to solve Maxwell’s equations numerically.
+OpenWME is an open-source electromagnetic field solver based on **Weber-Maxwell Electrodynamics**. By utilizing a modernized algebraic force formula rather than numerically solving partial differential equations, it satisfies Newton's third law **actio = reactio** even under accelerated and retarded conditions.
 
 ![](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit.gif)
 
-A key element of Weber-Maxwell electrodynamics is an algebraic force formula that describes the electromagnetic force between two point charges and satisfies Newton’s third law, i.e., *actio* = *reactio*. Unlike the well-known Coulomb force, the Weber-Maxwell force can also be applied to moving and arbitrarily accelerated point charges. Thus, compared with the Coulomb force, it includes all electromagnetic effects, e.g., magnetism and induction. Weber-Maxwell electrodynamics is also well suited for modeling and analyzing electromagnetic waves. In this respect, it goes beyond the limits of Weber electrodynamics, which is included as a subset. The relation to Maxwell electrodynamics is that the Weber-Maxwell force represents the general solution of Maxwell’s equations for point charges, provided that one interprets Maxwell’s equations in an adequate way. Another important feature for engineering is that this electrodynamics fulfills the Galilean principle of relativity while at the same time ensuring that electromagnetic waves propagate at the speed of light for every receiver and observer. The Lorentz transformation is not required.
+## Key Concept & Paradigm
 
-The solver was developed to support the peer review of scientific articles and to demonstrate that Weber-Maxwell electrodynamics provides correct predictions.
+Standard computational electromagnetics (like FDTD or FEM) discretize the entire spatial volume. While highly optimized for complex material boundaries, they mask the underlying particle physics.
 
-#### The theoretical foundations are described in several articles:
-- Electrodynamics for Nonrelativistic Point Charges in Electrical Engineering: A framework based on Maxwell’s equations and Ampère’s original force law, *IEEE Antennas and Propagation Magazine*, 2025, DOI: [10.1109/MAP.2025.3555924](https://doi.org/10.1109/MAP.2025.3555924)
-- Weber–Maxwell electrodynamics: classical electromagnetism in its most compact and pure form, *Electromagnetics*, 2024, DOI: [10.1080/02726343.2024.2375328](https://doi.org/10.1080/02726343.2024.2375328)
-- The Importance of Weber–Maxwell Electrodynamics in Electrical Engineering, *IEEE Transactions on Antennas and Propagation*, 2023, DOI: [10.1109/TAP.2023.3278078](https://doi.org/10.1109/TAP.2023.3278078)
-- Inhomogeneous wave equation, Liénard-Wiechert potentials, and Hertzian dipoles in Weber electrodynamics, *Electromagnetics*, 2023, DOI: [10.1080/02726343.2022.2161709](https://doi.org/10.1080/02726343.2022.2161709)
+**OpenWME takes a fundamental particle-based approach:**
 
-Preprints can be found on [Techrxiv](https://www.techrxiv.org/).
+* **Direct Physics:** Computes the direct dynamic interaction between individual point charges.
+* **No Spatial Meshing:** Bypasses heavy numerical grid generation for point-source problems.
+* **Academic Validation:** The foundational framework is peer-reviewed and published in the [*IEEE Transactions on Antennas and Propagation (TAP)*](https://doi.org/10.1109/TAP.2023.3278078), [*IEEE Antennas and Propagation Magazine*](https://doi.org/10.1109/MAP.2025.3555924) and [*Electromagnetics*](https://doi.org/10.1080/02726343.2024.2375328).
+
+## Core Emulation Capabilities & Evolution
+
+Originally developed to simplify electrodynamics by bypassing the complex and mathematically cumbersome concept of the magnetic field, OpenWME has evolved into a powerful framework that bridges classical physics and quantum mechanics.
+
+### 1. Classical Electrodynamics (The Foundation)
+OpenWME operates purely on direct particle-to-particle interactions, demonstrating that the magnetic field is not a fundamental entity but an emergent, relational phenomenon. The built-in examples beautifully illustrate:
+
+* **The Reality of the Lorentz Force:** Shows how the Lorentz force naturally emerges as a special case for low-frequency currents without postulating a magnetic field.
+* **Ampère's Force Law:** Simulates how two parallel current-carrying wires attract or repel each other based purely on relational Weber-Maxwell forces.
+* **Classical Wave Phenomena:** Visualizes how classical wave interference and diffraction patterns emerge from delayed matter-field interactions.
+
+### 2. Quantum Emulation (The Emergent Discovery)
+
+Interestingly, this field-free approach has, in a natural and unexpected way, unlocked the door to interpreting quantum mechanics through classical physics, as documented in our latest research:
+
+* **Deterministic Double-Slit Interference:** Replicates wave-particle duality through the ponderomotive self-force of a Hertzian dipole interacting with its own boundary-reflected fields (Published in [*IEEE Access*](https://doi.org/10.1109/ACCESS.2026.3709896) and [Annales de la Fondation Louis de Broglie](https://fondationlouisdebroglie.org/AFLB-491/1007Kuehn.pdf)).
+* **Schrödinger Equation Derivation:** Proves that the 3D Schrödinger equation emerges naturally from classical Weber-Maxwell interactions combined with macroscopic Brownian diffusion (Nelson/Madelung framework).
+
+## Current Status: Prototype & Invitation
+
+OpenWME is currently a highly functional **academic prototype**.
+
+* **Where it excels:** Simulation of fundamental interactions between matter and fields, accelerated point charges (bremsstrahlung), ensembles of Hertzian dipoles and point charges
+* **Limitations:** It is not yet optimized to replace industry-standard FEM/FDTD solvers for massive, heterogeneous macroscopic geometries.
+
+*We welcome contributions from engineers, physicists, and software developers to extend this framework into a scalable, high-performance simulation ecosystem.*
 
 ## Usage
 
@@ -36,17 +61,19 @@ For most examples, there is also a video that demonstrates the result of the sim
 - Reflection and polarization: [Hertzian dipole in front of a mirror](examples/02_electromagnetic_waves/05_hertzian_dipole_in_front_of_a_mirror/hertzian_dipole_in_front_of_a_mirror.webm?raw=true)
 - Reflection at a double slit: [Interference pattern depends on the relative position of the transmitter](examples/02_electromagnetic_waves/06_interference_depending_on_the_position_relative_to_the_openings/interference_depending_on_the_position_relative_to_the_openings.webm?raw=true)
 - Electromagnetic shielding: [Shielding by destructive interference](examples/02_electromagnetic_waves/07_shielding/shielding.webm?raw=true)
-- Diffraction: [Diffraction on a half-plane](examples/02_electromagnetic_waves/08_diffraction_half_plane/diffraction_half_plane.webm?raw=true)
-- Diffraction: [Diffraction at two shifted half planes](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/diffraction_at_shifted_half_planes.webm?raw=true)
+- Classical diffraction: [Diffraction on a half-plane](examples/02_electromagnetic_waves/08_diffraction_half_plane/diffraction_half_plane.webm?raw=true)
+- Classical diffraction: [Diffraction at two shifted half planes](examples/02_electromagnetic_waves/09_diffraction_at_shifted_half_planes/diffraction_at_shifted_half_planes.webm?raw=true)
 - Shielding and scattering: [Hollow sphere within a field of a transverse_wave](examples/02_electromagnetic_waves/10_hollow_sphere_within_a_field_of_a_transverse_wave/hollow_sphere_within_a_field_of_a_transverse_wave.webm?raw=true)
 - Waveguides: [Transmission of a wave in a pipe](examples/02_electromagnetic_waves/11_waveguide/waveguide.webm?raw=true)
-- Why do accelerating point charges radiate electromagnetic waves: [Field of a point charge that is suddenly accelerated](examples/02_electromagnetic_waves/12_suddenly_accelerated_point_charge/suddenly_accelerated_point_charge.webm?raw=true)
-- Interference: [Another example for interference at a double slit](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit.webm?raw=true)
+- Why do accelerating point charges produce electromagnetic waves: [Field of a point charge that is suddenly accelerated](examples/02_electromagnetic_waves/12_suddenly_accelerated_point_charge/suddenly_accelerated_point_charge.webm?raw=true)
+- Classical interference: [Another example for interference at a double slit](examples/02_electromagnetic_waves/13_interference_at_a_double_slit/interference_at_a_double_slit.webm?raw=true)
 
 ### Research issues outside of classical electrodynamics:
 - Special relativity: [Einstein's light clock](examples/03_special_relativity/01_light_clock/light_clock.webm?raw=true)
 - Relativity of simultaneity: [Each intertial frame has its own fields](examples/03_special_relativity/02_reflection_moving_transmitter_resting_receiver/reflection_moving_transmitter_resting_receiver.webm?raw=true)
 - Quantum forces: [Field of the force of a Hertzian dipole on itself when it is in front of a double slit as a function of the location](examples/04_quantum_mechanics/01_quantum_forces_at_a_double_slit/quantum_forces_at_a_double_slit.png?raw=true)
+- [Single particle diffraction](examples/04_quantum_mechanics/02_single_particle_interference/diffraction.webm?raw=true)
+- [Single particle interference](examples/04_quantum_mechanics/02_single_particle_interference/interference.webm?raw=true) 
 
 For the visualization of the results, [Cairo](https://www.cairographics.org/) is currently used. However, the library can also be used without graphical elements.
 
@@ -300,11 +327,11 @@ The addition of openings introduces discretization even along the z-axis. It is 
 
 This example demonstrates the calculation of the ponderomotive field created by reflection of a single Hertzian dipole's electromagnetic wave at an atomic barrier. It also shows how strongly the trajectory of a Hertzian dipole in such a field depends on its initial position and the barrier's shape. Averaging the trajectories obtained by varying the starting position produces distribution patterns familiar from real experiments with electrons or photons.
 
-**Single-slit trajectories:** [video](examples/04_quantum_mechanics/02_single_particle_interference/interference.webm?raw=true)
+**Single-slit trajectories:** [video](examples/04_quantum_mechanics/02_single_particle_interference/diffraction.webm?raw=true)
 
 **Double-slit trajectories:** [video](examples/04_quantum_mechanics/02_single_particle_interference/interference.webm?raw=true)
 
-These simulations are part of the preprint: [Induced ponderomotive fields: A classical approach to single-electron interference, the uncertainty principle, and the quantum measurement problem](https://doi.org/10.36227/techrxiv.176948933.35562758/v1).
+These simulations are part of the article: [Emergent Wave-Particle Dynamics From Ponderomotive Forces in High-Frequency Retarded Electrodynamics](https://doi.org/10.1109/ACCESS.2026.3709896).
 
 
 
